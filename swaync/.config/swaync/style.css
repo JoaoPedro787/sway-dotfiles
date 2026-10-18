@@ -1,22 +1,7 @@
 /* =============================================================================
- * Nord Color Palette
+ * Color Scheme Import
  * ============================================================================= */
-@define-color nord0 #2e3440;
-@define-color nord1 #3b4252;
-@define-color nord2 #434c5e;
-@define-color nord3 #4c566a;
-@define-color nord4 #d8dee9;
-@define-color nord5 #e5e9f0;
-@define-color nord6 #eceff4;
-@define-color nord7 #8fbcbb;
-@define-color nord8 #88c0d0;
-@define-color nord9 #81a1c1;
-@define-color nord10 #5e81ac;
-@define-color nord11 #bf616a;
-@define-color nord12 #d08770;
-@define-color nord13 #ebcb8b;
-@define-color nord14 #a3be8c;
-@define-color nord15 #b48ead;
+@import "colors/current.css";
 
 * {
   all: unset;
@@ -26,7 +11,7 @@
 }
 
 trough highlight {
-  background: @nord8;
+  background: @cc-accent;
 }
 
 scale {
@@ -45,28 +30,28 @@ trough slider {
   border-radius: 12.6px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
   transition: all 0.2s ease;
-  background-color: @nord8;
+  background-color: @cc-accent;
 }
 
 trough slider:hover {
   box-shadow:
     0 0 2px rgba(0, 0, 0, 0.8),
-    0 0 8px @nord8;
+    0 0 8px @cc-accent;
 }
 
 trough {
-  background-color: @nord1;
+  background-color: @cc-card;
 }
 
 /* notifications */
 .notification-background {
   box-shadow:
     0 0 8px 0 rgba(0, 0, 0, 0.8),
-    inset 0 0 0 1px @nord3;
+    inset 0 0 0 1px @cc-border;
   border-radius: 12.6px;
   margin: 18px;
-  background: @nord0;
-  color: @nord6;
+  background: @cc-bg;
+  color: @cc-text;
   padding: 0;
 }
 
@@ -76,7 +61,7 @@ trough {
 }
 
 .notification-background .notification.critical {
-  box-shadow: inset 0 0 7px 0 @nord11;
+  box-shadow: inset 0 0 7px 0 @cc-critical;
 }
 
 .notification .notification-content {
@@ -89,15 +74,15 @@ trough {
 }
 
 .notification-content .summary {
-  color: @nord6;
+  color: @cc-text;
 }
 
 .notification-content .time {
-  color: @nord4;
+  color: @cc-text-muted;
 }
 
 .notification-content .body {
-  color: @nord5;
+  color: @cc-text-body;
 }
 
 .notification > *:last-child > * {
@@ -108,46 +93,46 @@ trough {
   margin: 7px;
   padding: 2px;
   border-radius: 6.3px;
-  color: @nord0;
-  background-color: @nord11;
+  color: @cc-bg;
+  background-color: @cc-critical;
 }
 
 .notification-background .close-button:hover {
-  background-color: @nord12;
+  background-color: @cc-critical-hover;
 }
 
 .notification-background .close-button:active {
-  background-color: @nord15;
+  background-color: @cc-critical-active;
 }
 
 .notification .notification-action {
   border-radius: 7px;
-  color: @nord6;
-  box-shadow: inset 0 0 0 1px @nord3;
+  color: @cc-text;
+  box-shadow: inset 0 0 0 1px @cc-border;
   margin: 4px;
   padding: 8px;
   font-size: 0.2rem; /* controls the button size not text size*/
 }
 
 .notification .notification-action {
-  background-color: @nord1;
+  background-color: @cc-card;
 }
 
 .notification .notification-action:hover {
-  background-color: @nord2;
+  background-color: @cc-card-hover;
 }
 
 .notification .notification-action:active {
-  background-color: @nord3;
+  background-color: @cc-border;
 }
 
 .notification.critical progress {
-  background-color: @nord11;
+  background-color: @cc-critical;
 }
 
 .notification.low progress,
 .notification.normal progress {
-  background-color: @nord8;
+  background-color: @cc-accent;
 }
 
 .notification progress,
@@ -161,16 +146,16 @@ trough {
 .control-center {
   box-shadow:
     0 0 8px 0 rgba(0, 0, 0, 0.8),
-    inset 0 0 0 1px @nord3;
+    inset 0 0 0 1px @cc-border;
   border-radius: 12.6px;
-  background-color: @nord0;
-  color: @nord6;
+  background-color: @cc-bg;
+  color: @cc-text;
   padding: 14px;
 }
 
 .control-center .notification-background {
   border-radius: 7px;
-  box-shadow: inset 0 0 0 1px @nord3;
+  box-shadow: inset 0 0 0 1px @cc-border;
   margin: 4px 10px;
 }
 
@@ -183,24 +168,24 @@ trough {
 }
 
 .control-center .widget-title > label {
-  color: @nord6;
+  color: @cc-text;
   font-size: 1.3em;
 }
 
 .control-center .widget-title button {
   border-radius: 7px;
-  color: @nord6;
-  background-color: @nord1;
-  box-shadow: inset 0 0 0 1px @nord3;
+  color: @cc-text;
+  background-color: @cc-card;
+  box-shadow: inset 0 0 0 1px @cc-border;
   padding: 8px;
 }
 
 .control-center .widget-title button:hover {
-  background-color: @nord2;
+  background-color: @cc-card-hover;
 }
 
 .control-center .widget-title button:active {
-  background-color: @nord3;
+  background-color: @cc-border;
 }
 
 .control-center .notification-group {
@@ -208,7 +193,7 @@ trough {
 }
 
 .control-center .notification-group:focus .notification-background {
-  background-color: @nord1;
+  background-color: @cc-card;
 }
 
 scrollbar slider {
@@ -230,28 +215,28 @@ scrollbar trough {
 .widget-dnd > switch {
   font-size: initial;
   border-radius: 8px;
-  background: @nord1;
+  background: @cc-card;
   box-shadow: none;
 }
 
 .widget-dnd > switch:checked {
-  background: @nord8;
+  background: @cc-accent;
 }
 
 .widget-dnd > switch slider {
-  background: @nord3;
+  background: @cc-border;
   border-radius: 8px;
 }
 
 /* mpris */
 .widget-mpris-player {
-  background: @nord1;
+  background: @cc-card;
   border-radius: 12.6px;
-  color: @nord6;
+  color: @cc-text;
 }
 
 .mpris-overlay {
-  background-color: @nord1;
+  background-color: @cc-card;
   opacity: 0.9;
   padding: 15px 10px;
 }
@@ -264,17 +249,17 @@ scrollbar trough {
 
 .widget-mpris-title {
   font-size: 1.2rem;
-  color: @nord6;
+  color: @cc-text;
 }
 
 .widget-mpris-subtitle {
   font-size: 1rem;
-  color: @nord4;
+  color: @cc-text-muted;
 }
 
 .widget-mpris button {
   border-radius: 12.6px;
-  color: @nord6;
+  color: @cc-text;
   margin: 0 5px;
   padding: 2px;
 }
@@ -288,11 +273,11 @@ scrollbar trough {
 }
 
 .widget-mpris button:hover {
-  background-color: @nord2;
+  background-color: @cc-card-hover;
 }
 
 .widget-mpris button:active {
-  background-color: @nord3;
+  background-color: @cc-border;
 }
 
 .widget-mpris button:disabled {
@@ -305,17 +290,17 @@ scrollbar trough {
 }
 
 .widget-menubar > box > .menu-button-bar > :last-child {
-  color: @nord11;
+  color: @cc-critical;
 }
 
 .power-buttons button:hover,
 .powermode-buttons button:hover,
 .screenshot-buttons button:hover {
-  background: @nord2;
+  background: @cc-card-hover;
 }
 
 .control-center .widget-label > label {
-  color: @nord6;
+  color: @cc-text;
   font-size: 2rem;
 }
 
@@ -332,21 +317,21 @@ scrollbar trough {
 }
 
 .widget-volume label {
-  color: @nord8;
+  color: @cc-accent;
   padding: 0 1rem;
 }
 
 .widget-volume trough highlight {
-  background: @nord8;
+  background: @cc-accent;
 }
 
 .widget-backlight trough highlight {
-  background: @nord13;
+  background: @cc-warning;
 }
 
 .widget-backlight label {
   font-size: 1.5rem;
-  color: @nord13;
+  color: @cc-warning;
 }
 
 .widget-backlight .KB {

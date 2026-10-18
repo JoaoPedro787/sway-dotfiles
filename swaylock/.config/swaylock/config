@@ -4,9 +4,6 @@ ignore-empty-password
 show-failed-attempts
 fade-in=0.15
 
-# --- Fundo Sólido e Opaco (Nord0 - Bloqueia a desktop) ---
-color=2e3440
-
 # --- Tipografia & Relógio ---
 clock
 font="JetBrainsMono Nerd Font"
@@ -20,8 +17,10 @@ indicator
 indicator-radius=125
 indicator-thickness=8
 indicator-idle-visible
+# --- Paleta Nord (100% opacas) ---
 
-# --- Cores da Paleta Nord (100% opacas) ---
+# Fundo sólido (Nord0)
+color=2e3440
 
 # Interior do anel (nord1 opaco)
 inside-color=3b4252

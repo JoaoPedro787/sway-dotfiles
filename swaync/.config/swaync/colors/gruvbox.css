@@ -1,0 +1,18 @@
+/* =============================================================================
+ * Gruvbox Dark Palette for SwayNC
+ * ============================================================================= */
+
+@define-color cc-bg #282828;
+@define-color cc-card #3c3836;
+@define-color cc-card-hover #504945;
+@define-color cc-border #665c54;
+
+@define-color cc-text #ebdbb2;
+@define-color cc-text-body #d5c4a1;
+@define-color cc-text-muted #a89984;
+
+@define-color cc-accent #fe8019;
+@define-color cc-critical #fb4934;
+@define-color cc-critical-hover #cc241d;
+@define-color cc-critical-active #d3869b;
+@define-color cc-warning #fabd2f;

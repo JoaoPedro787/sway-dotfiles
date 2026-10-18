@@ -1,0 +1,35 @@
+/* ===========================
+ * Nord Palette for Waybar
+ * =========================== */
+
+@define-color base-bg rgba(46, 52, 64, 0.85);
+@define-color base-bg-solid #2e3440;
+@define-color base-fg #eceff4;
+
+@define-color ws-bg @base-bg;
+@define-color ws-bg-active @base-bg-solid;
+@define-color ws-bg-urgent #bf616a;
+
+@define-color ws-fg @base-fg;
+@define-color ws-fg-active #88c0d0;
+@define-color ws-fg-urgent #bf616a;
+
+@define-color mpris-border @base-bg-solid;
+
+@define-color cpu-fg #8fbcbb;
+@define-color mem-fg #b48ead;
+@define-color clock-fg #88c0d0;
+@define-color clock-simple-fg #81a1c1;
+@define-color window-fg @base-fg;
+@define-color audio-fg #81a1c1;
+@define-color audio-muted-fg #4c566a;
+@define-color tray-fg #a3be8c;
+@define-color bluetooth-fg #81a1c1;
+@define-color battery-fg #d08770;
+@define-color logo-fg #88c0d0;
+@define-color cava-fg #a3be8c;
+@define-color power-fg #bf616a;
+
+@define-color tooltip-bg #3b4252;
+@define-color tooltip-border #88c0d0;
+@define-color sep-fg #4c566a;

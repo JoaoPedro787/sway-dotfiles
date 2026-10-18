@@ -1,0 +1,18 @@
+/* =============================================================================
+ * Nord Palette for SwayNC
+ * ============================================================================= */
+
+@define-color cc-bg #2e3440;
+@define-color cc-card #3b4252;
+@define-color cc-card-hover #434c5e;
+@define-color cc-border #4c566a;
+
+@define-color cc-text #eceff4;
+@define-color cc-text-body #e5e9f0;
+@define-color cc-text-muted #d8dee9;
+
+@define-color cc-accent #88c0d0;
+@define-color cc-critical #bf616a;
+@define-color cc-critical-hover #d08770;
+@define-color cc-critical-active #b48ead;
+@define-color cc-warning #ebcb8b;

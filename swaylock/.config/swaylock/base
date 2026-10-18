@@ -1,0 +1,19 @@
+# --- Comportamento ---
+daemonize
+ignore-empty-password
+show-failed-attempts
+fade-in=0.15
+
+# --- Tipografia & Relógio ---
+clock
+font="JetBrainsMono Nerd Font"
+timestr=%H:%M
+# Formato compacto para caber perfeitamente dentro do anel:
+datestr=%a, %d de %b
+
+# --- Geometria do Indicador ---
+indicator
+# Raio expandido para dar respiro ao texto da data:
+indicator-radius=125
+indicator-thickness=8
+indicator-idle-visible

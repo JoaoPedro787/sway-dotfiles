@@ -1,0 +1,35 @@
+/* ===========================
+ * Gruvbox Dark Palette for Waybar
+ * =========================== */
+
+@define-color base-bg rgba(40, 40, 40, 0.85);
+@define-color base-bg-solid #282828;
+@define-color base-fg #ebdbb2;
+
+@define-color ws-bg @base-bg;
+@define-color ws-bg-active @base-bg-solid;
+@define-color ws-bg-urgent #cc241d;
+
+@define-color ws-fg @base-fg;
+@define-color ws-fg-active #fe8019;
+@define-color ws-fg-urgent #fb4934;
+
+@define-color mpris-border @base-bg-solid;
+
+@define-color cpu-fg #8ec07c;
+@define-color mem-fg #d3869b;
+@define-color clock-fg #83a598;
+@define-color clock-simple-fg #8ec07c;
+@define-color window-fg @base-fg;
+@define-color audio-fg #83a598;
+@define-color audio-muted-fg #928374;
+@define-color tray-fg #b8bb26;
+@define-color bluetooth-fg #83a598;
+@define-color battery-fg #fe8019;
+@define-color logo-fg #fabd2f;
+@define-color cava-fg #b8bb26;
+@define-color power-fg #fb4934;
+
+@define-color tooltip-bg #3c3836;
+@define-color tooltip-border #fabd2f;
+@define-color sep-fg #665c54;
