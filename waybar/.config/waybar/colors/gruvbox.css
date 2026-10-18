@@ -15,6 +15,7 @@
 @define-color ws-fg-urgent #fb4934;
 
 @define-color mpris-border @base-bg-solid;
+@define-color border-accent #fe8019;
 
 @define-color cpu-fg #8ec07c;
 @define-color mem-fg #d3869b;
