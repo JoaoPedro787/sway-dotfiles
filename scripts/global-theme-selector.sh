@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPONENTS_DIR="${SCRIPT_DIR}/components"
 
 # Source component modules
-for comp in rofi waybar swaync swaylock kitty; do
+for comp in rofi waybar swaync swaylock kitty sway; do
     if [[ -f "${COMPONENTS_DIR}/${comp}.sh" ]]; then
         # shellcheck source=/dev/null
         source "${COMPONENTS_DIR}/${comp}.sh"
@@ -49,7 +49,7 @@ if [[ -z "$chosen" ]]; then
         ((idx++))
     done
 
-    chosen=$(printf "%s\n" "${AVAILABLE_THEMES[@]}" | rofi -dmenu -i -selected-row "$selected_row" -p "󰔎 Global Theme" -mesg "Current: ${current_theme:-None}")
+    chosen=$(printf "%s\n" "${AVAILABLE_THEMES[@]}" | rofi -dmenu -i -selected-row "$selected_row" -p "󰔎 Global Theme" -mesg "Current: ${current_theme:-None}" || true)
 fi
 
 # Exit if cancelled or empty
@@ -101,6 +101,11 @@ fi
 # Apply to Waybar
 if ! apply_waybar_theme "$chosen"; then
     errors+=("waybar")
+fi
+
+# Apply to Sway
+if ! apply_sway_theme "$chosen"; then
+    errors+=("sway")
 fi
 
 # Save state
