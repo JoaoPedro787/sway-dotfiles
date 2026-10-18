@@ -13,7 +13,7 @@ configuration {
 }
 
 /*****----- Global Properties -----*****/
-@import                          "./colors/nord.rasi"
+@import                          "./colors/current.rasi"
 @import                          "./fonts/fonts.rasi"
 
 /*
