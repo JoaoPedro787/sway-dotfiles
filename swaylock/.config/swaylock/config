@@ -1,0 +1,50 @@
+# --- Comportamento ---
+daemonize
+ignore-empty-password
+show-failed-attempts
+fade-in=0.15
+
+# --- Fundo Sólido e Opaco (Nord0 - Bloqueia a desktop) ---
+color=2e3440
+
+# --- Tipografia & Relógio ---
+clock
+font="JetBrainsMono Nerd Font"
+timestr=%H:%M
+# Formato compacto para caber perfeitamente dentro do anel:
+datestr=%a, %d de %b
+
+# --- Geometria do Indicador ---
+indicator
+# Raio expandido para dar respiro ao texto da data:
+indicator-radius=125
+indicator-thickness=8
+indicator-idle-visible
+
+# --- Cores da Paleta Nord (100% opacas) ---
+
+# Interior do anel (nord1 opaco)
+inside-color=3b4252
+inside-clear-color=88c0d0
+inside-ver-color=81a1c1
+inside-wrong-color=bf616a
+
+# Anel externo (nord3 em repouso / nord8, 9, 11 nos estados)
+ring-color=4c566a
+ring-clear-color=88c0d0
+ring-ver-color=81a1c1
+ring-wrong-color=bf616a
+
+# Feedback de digitação (nord14 verde / nord11 vermelho)
+key-hl-color=a3be8c
+bs-hl-color=bf616a
+
+# Textos (nord4 Snow Storm / nord0 Polar Night nos feedbacks)
+text-color=eceff4
+text-clear-color=2e3440
+text-ver-color=2e3440
+text-wrong-color=2e3440
+
+# Linhas divisórias transparentes
+line-color=00000000
+separator-color=00000000
