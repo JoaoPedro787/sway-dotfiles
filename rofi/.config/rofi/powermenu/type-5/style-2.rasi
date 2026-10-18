@@ -145,3 +145,6 @@ textbox {
     vertical-align:              0.5;
     horizontal-align:            0.5;
 }
+
+/*****----- Borders & Corner Radius -----*****/
+@import                          "~/.config/rofi/borders/current.rasi"

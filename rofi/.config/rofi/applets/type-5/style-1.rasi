@@ -164,3 +164,6 @@ element selected.normal {
     background-color:            var(selected);
     text-color:                  var(foreground);
 }
+
+/*****----- Borders & Corner Radius -----*****/
+@import                          "~/.config/rofi/borders/current.rasi"

@@ -172,3 +172,6 @@ textbox {
     horizontal-align:            0.0;
     highlight:                   none;
 }
+
+/*****----- Borders & Corner Radius -----*****/
+@import                          "~/.config/rofi/borders/current.rasi"

@@ -277,3 +277,6 @@ error-message {
     background-color:            @background-colour;
     text-color:                  @foreground-colour;
 }
+
+/*****----- Borders & Corner Radius -----*****/
+@import                          "~/.config/rofi/borders/current.rasi"
