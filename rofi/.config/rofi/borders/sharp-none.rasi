@@ -1,0 +1,15 @@
+/**
+ * Border Preset: Sharp (0px) - Sem Borda
+ **/
+
+window {
+    border: 0px solid;
+    border-radius: 0px;
+}
+
+element,
+textbox-prompt-colon,
+prompt,
+message {
+    border-radius: 0px;
+}

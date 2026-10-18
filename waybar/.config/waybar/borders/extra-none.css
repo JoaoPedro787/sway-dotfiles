@@ -1,0 +1,24 @@
+/**
+ * Border Preset: Extra Rounded (18px) - Sem Borda
+ **/
+
+#clock,
+#pulseaudio,
+#tray,
+#bluetooth,
+#battery,
+#custom-logo,
+#custom-power,
+#custom-spotify,
+#custom-cava,
+#custom-notification,
+#custom-launcher,
+#cpu,
+#network,
+#memory,
+#window,
+#workspaces button,
+#mpris {
+  border-radius: 16px;
+  border: none;
+}

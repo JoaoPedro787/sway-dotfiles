@@ -1,0 +1,16 @@
+/**
+ * Border Preset: Rounded (10px) - Com Borda Colorida
+ **/
+
+window {
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: @selected;
+}
+
+element,
+textbox-prompt-colon,
+prompt,
+message {
+    border-radius: 10px;
+}

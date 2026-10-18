@@ -1,0 +1,15 @@
+/**
+ * Border Preset: Rounded (10px) - Sem Borda
+ **/
+
+window {
+    border: 0px solid;
+    border-radius: 10px;
+}
+
+element,
+textbox-prompt-colon,
+prompt,
+message {
+    border-radius: 10px;
+}

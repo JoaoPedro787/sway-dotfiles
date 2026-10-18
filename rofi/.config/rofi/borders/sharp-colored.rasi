@@ -1,0 +1,16 @@
+/**
+ * Border Preset: Sharp (0px) - Com Borda Colorida
+ **/
+
+window {
+    border: 2px solid;
+    border-radius: 0px;
+    border-color: @selected;
+}
+
+element,
+textbox-prompt-colon,
+prompt,
+message {
+    border-radius: 0px;
+}

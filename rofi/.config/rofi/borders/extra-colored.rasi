@@ -1,0 +1,16 @@
+/**
+ * Border Preset: Extra Rounded (18px) - Com Borda Colorida
+ **/
+
+window {
+    border: 2px solid;
+    border-radius: 18px;
+    border-color: @selected;
+}
+
+element,
+textbox-prompt-colon,
+prompt,
+message {
+    border-radius: 18px;
+}

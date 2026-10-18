@@ -150,3 +150,7 @@ element selected.normal {
     background-color:            var(selected);
     text-color:                  var(background);
 }
+
+/*****----- Borders & Corner Radius -----*****/
+@import                          "./borders/current.rasi"
+

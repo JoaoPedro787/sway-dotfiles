@@ -1,0 +1,24 @@
+/**
+ * Border Preset: Rounded (10px) - Com Borda Colorida
+ **/
+
+#clock,
+#pulseaudio,
+#tray,
+#bluetooth,
+#battery,
+#custom-logo,
+#custom-power,
+#custom-spotify,
+#custom-cava,
+#custom-notification,
+#custom-launcher,
+#cpu,
+#network,
+#memory,
+#window,
+#workspaces button,
+#mpris {
+  border-radius: 8px;
+  border: 2px solid @border-accent;
+}

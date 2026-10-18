@@ -58,11 +58,9 @@ exec wlsunset
 
 ### Aparência e Efeitos visuais (SwayFX)
 # ------------------------------------------------------------------------------
-# Bordas e Espaçamentos
-default_border none
-default_floating_border none
+# Bordas, Espaçamentos e Cores
 gaps inner 15
-corner_radius 10
+include ~/.config/sway/borders/current.conf
 
 # Animações
 animation_duration_ms 250
