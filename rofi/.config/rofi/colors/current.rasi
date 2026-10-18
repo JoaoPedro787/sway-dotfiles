@@ -1,6 +1,6 @@
 /**
  * Current Active Color Scheme for Rofi
- * Automatically updated by ~/.config/rofi/scripts/theme-selector.sh
+ * Automatically updated by global theme selector
  **/
 
 @import "nord.rasi"
