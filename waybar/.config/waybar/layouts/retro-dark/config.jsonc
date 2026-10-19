@@ -1,0 +1,125 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 38,
+    "margin-top": 8,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 4,
+
+    "modules-left": [
+        "custom/fedora",
+        "sway/workspaces",
+        "sway/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "backlight",
+        "pulseaudio",
+        "bluetooth",
+        "network",
+        "battery",
+        "custom/notification",
+        "tray",
+        "custom/power"
+    ],
+
+    "custom/fedora": {
+        "format": " Fedora",
+        "tooltip": false,
+        "on-click": "$HOME/.config/rofi/scripts/apps"
+    },
+
+    "sway/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "focused": "󱓻",
+            "default": "󱓼"
+        }
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 30,
+        "rewrite": {
+            "": "sway"
+        }
+    },
+
+    "clock": {
+        "interval": 5,
+        "format": "󰥔 {:%H:%M  󰃭 %a %Y-%m-%d}",
+        "tooltip-format": "<span font='Lexend 14'><tt><small>{calendar}</small></tt></span>"
+    },
+
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "reverse-scrolling": true
+    },
+
+    "pulseaudio": {
+        "format-icons": ["󰖀", "󰕾"],
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁",
+        "reverse-scrolling": true,
+        "on-click": "pavucontrol"
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device-alias}",
+        "tooltip": true,
+        "on-click": "$HOME/.config/rofi/scripts/rofi-bluetooth"
+    },
+
+    "network": {
+        "format-ethernet": "󰈀 {ifname}",
+        "format-wifi": "󰖩 {essid}",
+        "format-disconnected": "󰖪 Off",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "tooltip-format-wifi": "Connected through {ifname} ({signalStrength}%)",
+        "on-click": "$HOME/.config/rofi/scripts/rofi-wifi-menu.sh"
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format-charging": "󰂄 {capacity}%",
+        "format": "{icon} {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁿", "󰂀", "󰂂", "󰁹"]
+    },
+
+
+    "custom/notification": {
+        "escape": true,
+        "exec": "swaync-client -swb",
+        "exec-if": "which swaync-client",
+        "format": "{icon}",
+        "format-icons": {
+            "none": "󰅺",
+            "notification": "󰡟"
+        },
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "return-type": "json",
+        "tooltip": false
+    },
+
+    "tray": {
+        "show-passive-items": true,
+        "spacing": 8
+    },
+
+    "custom/power": {
+        "tooltip": false,
+        "on-click": "$HOME/.config/rofi/scripts/powermenu_t1",
+        "format": "⏻"
+    }
+}

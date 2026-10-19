@@ -18,6 +18,7 @@ window#waybar * {
 
 window#waybar {
   background-color: transparent;
+  border: none !important;
   transition-property: background-color;
   transition-duration: 0.5s;
 }

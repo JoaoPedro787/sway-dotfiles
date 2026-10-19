@@ -23,6 +23,7 @@ done
 AVAILABLE_THEMES=(
     "nord"
     "gruvbox"
+    "catppuccin-mocha"
 )
 
 # Detect current active theme (checks kitty, rofi, or fallback state)

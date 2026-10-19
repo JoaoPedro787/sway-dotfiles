@@ -2,6 +2,12 @@
  * Border Preset: Extra Rounded (18px) - Sem Borda
  **/
 
+window#waybar,
+#workspaces {
+  border-radius: 18px;
+  border: none;
+}
+
 #clock,
 #pulseaudio,
 #tray,

@@ -1,0 +1,18 @@
+/* =============================================================================
+ * Catppuccin Mocha Palette for SwayNC
+ * ============================================================================= */
+
+@define-color cc-bg #1e1e2e;
+@define-color cc-card #313244;
+@define-color cc-card-hover #45475a;
+@define-color cc-border #585b70;
+
+@define-color cc-text #cdd6f4;
+@define-color cc-text-body #bac2de;
+@define-color cc-text-muted #a6adc8;
+
+@define-color cc-accent #b4befe;
+@define-color cc-critical #f38ba8;
+@define-color cc-critical-hover #eba0ac;
+@define-color cc-critical-active #cba6f7;
+@define-color cc-warning #f9e2af;

@@ -2,6 +2,12 @@
  * Border Preset: Sharp (0px) - Sem Borda
  **/
 
+window#waybar,
+#workspaces {
+  border-radius: 0px;
+  border: none;
+}
+
 #clock,
 #pulseaudio,
 #tray,

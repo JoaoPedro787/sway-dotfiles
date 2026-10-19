@@ -1,0 +1,116 @@
+/* ===========================
+ * Retro-Dark Layout Style
+ * =========================== */
+@import "colors/current.css";
+
+* {
+    min-height: 0;
+    min-width: 0;
+    font-family: "JetBrains Mono", "JetBrainsMono NFP", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+window#waybar {
+    background-color: @base-bg-solid;
+    border: 2px solid @border-accent;
+    padding-left: 6px;
+    transition-property: background-color, border-color;
+    transition-duration: 0.3s;
+}
+
+#custom-fedora {
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #ffffff;
+}
+
+#workspaces {
+    border: 2px solid @border-accent;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 2px 4px;
+}
+
+#workspaces button {
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+    padding-left: 8px;
+    padding-right: 7px;
+    background: transparent;
+}
+
+#workspaces button.focused {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+#workspaces button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#window,
+#clock,
+#backlight,
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#custom-notification,
+#tray,
+#custom-power {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+    background: transparent;
+}
+
+#battery.warning {
+    border: 2px solid #f9e2af;
+}
+
+#battery.critical {
+    border: 2px solid #f38ba8;
+}
+
+#network.ethernet {
+    background-color: @border-accent;
+}
+
+#tray {
+    padding: 0 6px;
+}
+
+#custom-power {
+    padding-right: 10px;
+}
+
+/* ===========================
+ * Global Borders & Corner Radius
+ * =========================== */
+@import "borders/current.css";
+
+/* Preserva a identidade retro-dark nos botões e textos: sem bordas internas e cor branca */
+window#waybar #custom-fedora,
+window#waybar #workspaces button,
+window#waybar #window,
+window#waybar #clock,
+window#waybar #backlight,
+window#waybar #pulseaudio,
+window#waybar #bluetooth,
+window#waybar #network,
+window#waybar #battery,
+window#waybar #custom-notification,
+window#waybar #tray,
+window#waybar #custom-power {
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+}

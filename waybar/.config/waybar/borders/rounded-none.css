@@ -2,6 +2,12 @@
  * Border Preset: Rounded (10px) - Sem Borda
  **/
 
+window#waybar,
+#workspaces {
+  border-radius: 10px;
+  border: none;
+}
+
 #clock,
 #pulseaudio,
 #tray,
