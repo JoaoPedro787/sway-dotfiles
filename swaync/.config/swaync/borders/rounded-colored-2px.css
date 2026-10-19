@@ -1,5 +1,5 @@
 /**
- * Border Preset: Extra Rounded (18px) - Com Borda Colorida
+ * Border Preset: Rounded (10px) - Com Borda Colorida (2px)
  **/
 
 .notification-background,
@@ -8,10 +8,10 @@
 .widget-title,
 .widget-dnd,
 .widget-mpris {
-  border-radius: 18px;
+  border-radius: 10px;
 }
 
 .notification-background,
 .control-center {
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px @cc-accent;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 2px @cc-accent;
 }

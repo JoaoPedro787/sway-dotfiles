@@ -23,19 +23,19 @@ done
 AVAILABLE_PRESETS=(
     "sharp-none"
     "sharp-colored"
+    "sharp-colored-2px"
     "rounded-none"
     "rounded-colored"
-    "extra-none"
-    "extra-colored"
+    "rounded-colored-2px"
 )
 
 declare -A PRESET_LABELS=(
     ["sharp-none"]="󰓎 Sharp (0px) - Sem Borda"
-    ["sharp-colored"]="󰓎 Sharp (0px) - Com Borda Colorida"
+    ["sharp-colored"]="󰓎 Sharp (0px) - Com Borda Colorida (1px)"
+    ["sharp-colored-2px"]="󰓎 Sharp (0px) - Com Borda Colorida (2px)"
     ["rounded-none"]="󰓎 Rounded (10px) - Sem Borda"
-    ["rounded-colored"]="󰓎 Rounded (10px) - Com Borda Colorida"
-    ["extra-none"]="󰓎 Extra Rounded (18px) - Sem Borda"
-    ["extra-colored"]="󰓎 Extra Rounded (18px) - Com Borda Colorida"
+    ["rounded-colored"]="󰓎 Rounded (10px) - Com Borda Colorida (1px)"
+    ["rounded-colored-2px"]="󰓎 Rounded (10px) - Com Borda Colorida (2px)"
 )
 
 # Detect current active preset

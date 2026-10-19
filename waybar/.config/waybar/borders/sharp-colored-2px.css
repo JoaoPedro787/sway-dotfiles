@@ -1,11 +1,11 @@
 /**
- * Border Preset: Extra Rounded (18px) - Sem Borda
+ * Border Preset: Sharp (0px) - Com Borda Colorida (2px)
  **/
 
 window#waybar,
 #workspaces {
-  border-radius: 18px;
-  border: none;
+  border-radius: 0px;
+  border: 2px solid @border-accent;
 }
 
 #clock,
@@ -25,6 +25,6 @@ window#waybar,
 #window,
 #workspaces button,
 #mpris {
-  border-radius: 16px;
-  border: none;
+  border-radius: 0px;
+  border: 2px solid @border-accent;
 }

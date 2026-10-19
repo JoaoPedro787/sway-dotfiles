@@ -3,4 +3,4 @@
  * Automatically updated by global border selector
  **/
 
-@import "sharp-colored.rasi"
+@import "sharp-colored-2px.rasi"

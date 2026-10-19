@@ -41,12 +41,15 @@ EOF
     # Reload Sway and update existing windows
     if command -v swaymsg &>/dev/null && [[ -n "$SWAYSOCK" ]]; then
         swaymsg reload 2>/dev/null || true
-        if [[ "$preset" == *"-none" ]]; then
+        local border_type
+        border_type=$(grep -oP '^default_border \K.*' "$preset_file" 2>/dev/null)
+        if [[ "$border_type" == "none" ]]; then
             swaymsg "[app_id=.*] border none" 2>/dev/null || true
             swaymsg "[class=.*] border none" 2>/dev/null || true
-        elif [[ "$preset" == *"-colored" ]]; then
-            swaymsg "[app_id=.*] border pixel 1" 2>/dev/null || true
-            swaymsg "[class=.*] border pixel 1" 2>/dev/null || true
+        elif [[ "$border_type" =~ pixel\ ([0-9]+) ]]; then
+            local px="${BASH_REMATCH[1]}"
+            swaymsg "[app_id=.*] border pixel $px" 2>/dev/null || true
+            swaymsg "[class=.*] border pixel $px" 2>/dev/null || true
         fi
     fi
 
