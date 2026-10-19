@@ -1,20 +1,23 @@
-# Arquitetura do Sistema de Temas e Bordas Dinâmicos (Theme & Border Suite)
+# Arquitetura do Sistema de Temas, Bordas e Layouts Dinâmicos (Sway Customization Suite)
 
-Este documento descreve o funcionamento interno, a arquitetura e as convenções adotadas para os sistemas unificados de gerenciamento e troca de paletas visuais e estilos de bordas/cantos arredondados no ambiente Sway Suite (SwayFX, Kitty, Rofi, Swaylock, SwayNC e Waybar).
+Este documento descreve o funcionamento interno, a arquitetura e as convenções adotadas para os sistemas unificados de gerenciamento e troca de paletas visuais, estilos de bordas/cantos arredondados e layouts da Waybar no ambiente Sway Suite (SwayFX, Kitty, Rofi, Swaylock, SwayNC e Waybar).
 
 ---
 
 ## 1. Visão Geral e Filosofia
 
-O ecossistema divide-se em dois eixos orquestradores complementares:
+O ecossistema divide-se em três eixos orquestradores complementares:
 1. **Theme Suite (`global-theme-selector.sh`)**: Gerenciamento dinâmico da paleta cromática global (Nord, Gruvbox, etc.).
 2. **Border Suite (`global-border-selector.sh`)**: Gerenciamento de raio de curvatura (*corner radius*) e espessura/visibilidade de bordas nas janelas e componentes de interface.
+3. **Waybar Layout Suite (`waybar-layout-selector.sh`)**: Gerenciamento dinâmico da estrutura e estilo de layout da barra (posicionamento, distribuição de módulos e geometria), preservando sincronização imediata com os sistemas de cores e bordas.
 
 Ambos foram desenhados com base em quatro princípios:
-1. **Desacoplamento e Modularidade**: Os scripts principais não contêm código de apps hardcodado. A lógica reside em submódulos isolados (`scripts/components/*.sh` para cores e `scripts/components/borders/*.sh` para bordas).
+1. **Desacoplamento e Modularidade**: Os scripts principais não contêm código de apps hardcodado. A lógica reside em submódulos isolados (`scripts/components/*.sh` para cores, `scripts/components/borders/*.sh` para bordas e `scripts/components/waybar-layout.sh` para layout da barra).
 2. **Dupla Interface**: Cada módulo funciona tanto como biblioteca importável (`source`) quanto como ferramenta executável autônoma de linha de comando (`CLI`).
 3. **Recarregamento em Tempo Real (Hot-Reload)**: Aplicação instantânea sem reiniciar a sessão Sway ou fechar janelas ativas.
-4. **Sincronização Integrada**: Quando uma borda colorida está ativa (`*-colored`), a troca de tema no seletor de cores atualiza a cor da borda instantaneamente para refletir o tom de destaque do novo tema.
+4. **Sincronização Integrada**: 
+   - Quando uma borda colorida está ativa (`*-colored`), a troca de tema no seletor de cores atualiza a cor da borda instantaneamente.
+   - Qualquer layout de Waybar selecionado herda automaticamente o tema de cor e o preset de bordas ativo através dos imports `@import "colors/current.css";` e `@import "borders/current.css";`.
 
 ---
 
@@ -25,14 +28,16 @@ Ambos foram desenhados com base em quatro princípios:
 ├── scripts/
 │   ├── global-theme-selector.sh        # Orquestrador global de cores (Rofi & CLI)
 │   ├── global-border-selector.sh       # Orquestrador global de bordas & raio (Rofi & CLI)
+│   ├── waybar-layout-selector.sh       # Orquestrador de layouts da Waybar (Rofi & CLI)
 │   │
-│   └── components/                     # Módulos auxiliares de temas de cores
+│   └── components/                     # Módulos auxiliares de temas e layout
 │       ├── kitty.sh
 │       ├── rofi.sh
 │       ├── sway.sh
 │       ├── swaylock.sh
 │       ├── swaync.sh
-│       ├── waybar.sh
+│       ├── waybar.sh                   # Gerenciador de cores da Waybar
+│       ├── waybar-layout.sh            # Gerenciador de layouts da Waybar
 │       │
 │       └── borders/                    # Módulos auxiliares de bordas e corner radius
 │           ├── rofi.sh
@@ -82,13 +87,25 @@ Ambos foram desenhados com base em quatro princípios:
 │       └── <preset>.css
 │
 └── waybar/.config/waybar/
-    ├── style.css                       # Contém imports de colors/current.css e borders/current.css
+    ├── config.jsonc                    # Symlink para layouts/<ativo>/config.jsonc
+    ├── style.css                       # Symlink para layouts/<ativo>/style.css
     ├── colors/
     │   ├── current.css                 # Contém: @import "<tema>.css";
     │   └── <tema>.css
-    └── borders/
-        ├── current.css                 # Contém: @import "<preset>.css";
-        └── <preset>.css
+    ├── borders/
+    │   ├── current.css                 # Contém: @import "<preset>.css";
+    │   └── <preset>.css
+    └── layouts/                        # Diretório de variantes e templates
+        ├── default/                    # Layout padrão completo
+        │   ├── config.jsonc
+        │   ├── style.css
+        │   ├── colors -> ../../colors
+        │   └── borders -> ../../borders
+        └── example/                    # Template / layout alternativo flutuante
+            ├── config.jsonc
+            ├── style.css
+            ├── colors -> ../../colors
+            └── borders -> ../../borders
 ```
 
 ---
@@ -110,18 +127,18 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
 
 ## 4. Mecanismos de Hot-Reload
 
-| Componente | Sistema de Cores | Sistema de Bordas e Raio |
-| :--- | :--- | :--- |
-| **Sway / SwayFX** | `sway/.config/sway/colors/current.conf` é recarregado via `swaymsg reload`. Atualiza as classes `client.focused`, `client.unfocused`, etc. | `sway/.config/sway/borders/current.conf` define `corner_radius`, `default_border` e `default_floating_border`. Executa `swaymsg reload` e sincroniza janelas abertas via `swaymsg "[app_id=.*] border ..."` instantaneamente. |
-| **Waybar** | `killall -SIGUSR2 waybar`. Recarrega o CSS instantaneamente. | `killall -SIGUSR2 waybar`. Recarrega o arquivo `borders/current.css` sobrepondo as regras dos módulos. |
-| **SwayNC** | `swaync-client -rs` e `swaync-client -R`. | `swaync-client -rs` e `swaync-client -R`. Atualiza `border-radius` e `box-shadow` perimetral dos cards e painel. |
-| **Kitty** | `killall -SIGUSR1 kitty`. | Gerenciado automaticamente pela moldura e cantos do SwayFX. |
-| **Rofi** | Sob demanda ao abrir menus. | Sob demanda ao abrir menus (`@import "borders/current.rasi"` em `config.rasi` e launchers). |
-| **Swaylock** | Concatenação prévia (`base + color > config`). | Sob demanda ao bloquear a sessão. |
+| Componente | Sistema de Cores | Sistema de Bordas e Raio | Sistema de Layout (Waybar) |
+| :--- | :--- | :--- | :--- |
+| **Sway / SwayFX** | `sway/.config/sway/colors/current.conf` é recarregado via `swaymsg reload`. Atualiza as classes `client.focused`, `client.unfocused`, etc. | `sway/.config/sway/borders/current.conf` define `corner_radius`, `default_border` e `default_floating_border`. Executa `swaymsg reload` e sincroniza janelas abertas via `swaymsg "[app_id=.*] border ..."` instantaneamente. | N/A |
+| **Waybar** | `killall -SIGUSR2 waybar`. Recarrega o CSS instantaneamente. | `killall -SIGUSR2 waybar`. Recarrega o arquivo `borders/current.css` sobrepondo as regras dos módulos. | `swaymsg exec waybar` após atualizar symlinks `config.jsonc` e `style.css`. Reinicia o processo sem perturbar a sessão Sway. |
+| **SwayNC** | `swaync-client -rs` e `swaync-client -R`. | `swaync-client -rs` e `swaync-client -R`. Atualiza `border-radius` e `box-shadow` perimetral dos cards e painel. | N/A |
+| **Kitty** | `killall -SIGUSR1 kitty`. | Gerenciado automaticamente pela moldura e cantos do SwayFX. | N/A |
+| **Rofi** | Sob demanda ao abrir menus. | Sob demanda ao abrir menus (`@import "borders/current.rasi"` em `config.rasi` e launchers). | N/A |
+| **Swaylock** | Concatenação prévia (`base + color > config`). | Sob demanda ao bloquear a sessão. | N/A |
 
 ---
 
-## 5. Guia: Como Adicionar um Novo Tema ou Preset
+## 5. Guia: Como Adicionar Novos Elementos
 
 ### Adicionar uma Nova Paleta de Cores (Theme Suite)
 1. Crie o arquivo `<novo_tema>.<ext>` em:
@@ -141,13 +158,22 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
    - `rofi/.config/rofi/borders/<novo_preset>.rasi`
 2. Adicione o identificador ao array `AVAILABLE_PRESETS` e o rótulo descritivo em `PRESET_LABELS` no arquivo [scripts/global-border-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-border-selector.sh).
 
+### Adicionar um Novo Layout de Waybar (Waybar Layout Suite)
+1. Crie uma nova pasta em `waybar/.config/waybar/layouts/<nome_do_layout>/`.
+2. Adicione os arquivos:
+   - `config.jsonc`: estrutura JSONC de módulos e posicionamento da barra.
+   - `style.css`: regras CSS específicas do layout, contendo no início `@import "colors/current.css";` e no final `@import "borders/current.css";`.
+3. (Opcional) Adicione um rótulo amigável no array associativo `LAYOUT_LABELS` em [scripts/waybar-layout-selector.sh](file:///home/joaofedora/.dotfiles/scripts/waybar-layout-selector.sh).
+4. O layout será descoberto dinamicamente pelo seletor Rofi e pela CLI (`./scripts/waybar-layout-selector.sh <nome_do_layout>`).
+
 ---
 
 ## 6. Convenções para Agentes e Desenvolvedores
 
 - **Nunca hardcode paths absolutos de usuário** (`/home/joaofedora`): utilize sempre `$HOME` ou referências relativas via `BASH_SOURCE`.
-- **Preserve a idempotência**: invocar qualquer script com o tema ou preset já ativo deve reaplicar os arquivos e sinais com segurança e sem erros.
+- **Preserve a idempotência**: invocar qualquer script com o tema, preset ou layout já ativo deve reaplicar os arquivos e sinais com segurança e sem erros.
 - **Tratamento de Erros**: Qualquer novo módulo adicionado em `scripts/components/` ou `scripts/components/borders/` deve:
   - Validar a existência dos diretórios e arquivos de origem antes de escrever.
   - Retornar código de saída `0` para sucesso e `1` (com mensagem em `stderr`) para falha.
-  - Implementar funções de consulta no formato `get_<component>_theme` e `get_<component>_border`.
+  - Implementar funções de consulta no formato `get_<component>_theme`, `get_<component>_border` e `get_<component>_layout`.
+

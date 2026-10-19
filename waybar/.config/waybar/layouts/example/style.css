@@ -1,0 +1,174 @@
+/* ===========================
+ *  Palette de Cores & Bordas
+ * =========================== */
+@import "colors/current.css";
+
+/* ===========================
+ *  Global
+ * =========================== */
+
+window#waybar,
+window#waybar * {
+  min-height: 0;
+  min-width: 0;
+  font-family: Lexend, "JetBrainsMono NFP", monospace;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+window#waybar {
+  background-color: transparent;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+/* ===========================
+ *  Modules génériques
+ * =========================== */
+
+#clock,
+#pulseaudio,
+#tray,
+#bluetooth,
+#battery,
+#custom-launcher,
+#custom-notification,
+#custom-power,
+#cpu,
+#network,
+#memory,
+#window {
+  padding: 0.25rem 0.65rem;
+  margin: 0.25rem 0.2rem;
+  border-radius: 8px;
+  background-color: @base-bg;
+}
+
+/* ===========================
+ *  Workspaces
+ * =========================== */
+
+#workspaces button {
+  padding: 0.25rem 0.65rem;
+  margin: 0.25rem 0.2rem;
+  border-radius: 8px;
+  background-color: @ws-bg;
+  color: @ws-fg;
+}
+
+#workspaces button:hover {
+  color: @base-bg-solid;
+  background-color: @base-fg;
+}
+
+#workspaces button.active {
+  background-color: @ws-bg-active;
+  color: @ws-fg-active;
+}
+
+#workspaces button.urgent {
+  background-color: @ws-bg-urgent;
+  color: @ws-fg-urgent;
+}
+
+/* ===========================
+ *  MPRIS
+ * =========================== */
+
+#mpris {
+  padding: 0.25rem 0.65rem;
+  margin: 0.25rem 0.2rem;
+  border-radius: 8px;
+  background-color: @base-bg;
+}
+
+#mpris.playing {
+  color: #a6e3a1;
+}
+
+#mpris.paused {
+  color: #9399b2;
+}
+
+/* ===========================
+ *  États & couleurs modules
+ * =========================== */
+
+#cpu {
+  color: @cpu-fg;
+}
+
+#memory {
+  color: @mem-fg;
+}
+
+#clock {
+  color: @clock-fg;
+  font-weight: 700;
+}
+
+#window {
+  color: @window-fg;
+}
+
+#pulseaudio {
+  color: @audio-fg;
+}
+
+#pulseaudio.muted {
+  color: @audio-muted-fg;
+}
+
+#network {
+  color: @net-fg;
+}
+
+#bluetooth {
+  color: @bt-fg;
+}
+
+#battery {
+  color: @bat-fg;
+}
+
+#battery.charging {
+  color: @bat-charging-fg;
+}
+
+#battery.warning:not(.charging) {
+  color: @bat-warning-fg;
+}
+
+#battery.critical:not(.charging) {
+  color: @bat-critical-fg;
+}
+
+#custom-notification {
+  color: @notif-fg;
+}
+
+#custom-launcher {
+  color: #1690cf;
+}
+
+#custom-power {
+  color: @power-fg;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+
+/* ===========================
+ *  Tooltips
+ * =========================== */
+
+tooltip {
+  background-color: @tooltip-bg;
+  border: 1px solid @tooltip-border;
+}
+
+/* ===========================
+ *  Borders & Corner Radius
+ * =========================== */
+@import "borders/current.css";
