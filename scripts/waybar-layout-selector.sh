@@ -21,7 +21,7 @@ source "$COMPONENT_FILE"
 declare -A LAYOUT_LABELS=(
     ["default"]="󰓎 Default - Layout Padrão Completo"
     ["example"]="󰓎 Example - Barra Flutuante com Relógio Central"
-    ["retro-dark"]="󰓎 Retro Dark - Barra Retrô Minimalista"
+    ["retro"]="󰓎 Retro - Barra Retrô Minimalista"
 )
 
 # Discover all available layouts dynamically

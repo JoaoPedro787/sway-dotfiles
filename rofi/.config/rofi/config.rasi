@@ -10,11 +10,7 @@
 /*****----- Configuration -----*****/
 configuration {
     show-icons:                 true;
-    /** 
-    change to your icon theme *
-
     icon-theme:                 "KDE-Modern-Classic";
-    **/
 }
 
 /*****----- Global Properties -----*****/

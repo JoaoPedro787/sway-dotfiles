@@ -1,5 +1,5 @@
 /* ===========================
- * Retro-Dark Layout Style
+ * Retro Layout Style
  * =========================== */
 @import "colors/current.css";
 
@@ -97,7 +97,7 @@ window#waybar {
  * =========================== */
 @import "borders/current.css";
 
-/* Preserva a identidade retro-dark nos botões e textos: sem bordas internas e cor branca */
+/* Preserva a identidade retro nos botões e textos: sem bordas internas e cor branca */
 window#waybar #custom-fedora,
 window#waybar #workspaces button,
 window#waybar #window,

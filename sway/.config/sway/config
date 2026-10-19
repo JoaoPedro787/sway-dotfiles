@@ -4,7 +4,7 @@
 # ==============================================================================
 
 # Cursor Icon
-# seat seat0 xcursor_theme cursor_name size
+seat seat0 xcursor_theme Simp1e-Dark 24
 
 
 ### Variáveis
