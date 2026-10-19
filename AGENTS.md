@@ -1,15 +1,20 @@
-# Arquitetura do Sistema de Temas Dinâmicos (Theme Suite)
+# Arquitetura do Sistema de Temas e Bordas Dinâmicos (Theme & Border Suite)
 
-Este documento descreve o funcionamento interno, a arquitetura e as convenções adotadas para o sistema unificado de gerenciamento e troca de temas visuais no ambiente Sway Suite (Kitty, Rofi, Swaylock, SwayNC e Waybar).
+Este documento descreve o funcionamento interno, a arquitetura e as convenções adotadas para os sistemas unificados de gerenciamento e troca de paletas visuais e estilos de bordas/cantos arredondados no ambiente Sway Suite (SwayFX, Kitty, Rofi, Swaylock, SwayNC e Waybar).
 
 ---
 
 ## 1. Visão Geral e Filosofia
 
-O sistema foi desenhado com base em três princípios:
-1. **Desacoplamento e Modularidade**: O script principal não possui código específico de componentes hardcodado. Toda a lógica de configuração e recarregamento reside em submódulos isolados (`scripts/components/*.sh`).
-2. **Dupla Interface**: Cada módulo funciona tanto como uma biblioteca importável (`source`) quanto como um script executável autônomo de linha de comando (`CLI`).
-3. **Recarregamento em Tempo Real (Hot-Reload)**: Aplicação instantânea das novas cores nas janelas e barras ativas através de sinais do sistema operacional e IPC, dispensando reinicialização de processos ou da sessão Sway.
+O ecossistema divide-se em dois eixos orquestradores complementares:
+1. **Theme Suite (`global-theme-selector.sh`)**: Gerenciamento dinâmico da paleta cromática global (Nord, Gruvbox, etc.).
+2. **Border Suite (`global-border-selector.sh`)**: Gerenciamento de raio de curvatura (*corner radius*) e espessura/visibilidade de bordas nas janelas e componentes de interface.
+
+Ambos foram desenhados com base em quatro princípios:
+1. **Desacoplamento e Modularidade**: Os scripts principais não contêm código de apps hardcodado. A lógica reside em submódulos isolados (`scripts/components/*.sh` para cores e `scripts/components/borders/*.sh` para bordas).
+2. **Dupla Interface**: Cada módulo funciona tanto como biblioteca importável (`source`) quanto como ferramenta executável autônoma de linha de comando (`CLI`).
+3. **Recarregamento em Tempo Real (Hot-Reload)**: Aplicação instantânea sem reiniciar a sessão Sway ou fechar janelas ativas.
+4. **Sincronização Integrada**: Quando uma borda colorida está ativa (`*-colored`), a troca de tema no seletor de cores atualiza a cor da borda instantaneamente para refletir o tom de destaque do novo tema.
 
 ---
 
@@ -18,118 +23,131 @@ O sistema foi desenhado com base em três princípios:
 ```text
 ~/.dotfiles/
 ├── scripts/
-│   ├── global-theme-selector.sh       # Orquestrador global interativo (Rofi) e CLI
-│   └── components/                    # Módulos auxiliares específicos de cada app
+│   ├── global-theme-selector.sh        # Orquestrador global de cores (Rofi & CLI)
+│   ├── global-border-selector.sh       # Orquestrador global de bordas & raio (Rofi & CLI)
+│   │
+│   └── components/                     # Módulos auxiliares de temas de cores
 │       ├── kitty.sh
 │       ├── rofi.sh
+│       ├── sway.sh
 │       ├── swaylock.sh
 │       ├── swaync.sh
-│       └── waybar.sh
+│       ├── waybar.sh
+│       │
+│       └── borders/                    # Módulos auxiliares de bordas e corner radius
+│           ├── rofi.sh
+│           ├── sway.sh
+│           ├── swaync.sh
+│           └── waybar.sh
 │
 ├── kitty/.config/kitty/
-│   ├── kitty.conf                     # Contém: include ./colors/current.conf
+│   ├── kitty.conf                      # Contém: include ./colors/current.conf
 │   └── colors/
-│       ├── current.conf               # Aponta para o tema ativo (include ./<tema>.conf)
+│       ├── current.conf                # Aponta para o tema ativo (include ./<tema>.conf)
 │       ├── nord.conf
 │       └── gruvbox.conf
 │
-├── rofi/.config/rofi/colors/
-│   ├── current.rasi                   # Contém: @import "<tema>.rasi"
-│   └── <tema>.rasi
+├── rofi/.config/rofi/
+│   ├── config.rasi                     # Contém imports de ./colors/current.rasi e ./borders/current.rasi
+│   ├── colors/
+│   │   ├── current.rasi                # Contém: @import "<tema>.rasi"
+│   │   └── <tema>.rasi
+│   └── borders/
+│       ├── current.rasi                # Contém: @import "<preset>.rasi"
+│       └── <preset>.rasi
+│
+├── sway/.config/sway/
+│   ├── config                          # Contém: include ~/.config/sway/borders/current.conf
+│   ├── colors/
+│   │   ├── current.conf                # Contém: include ./<tema>.conf (client.focused, etc.)
+│   │   └── <tema>.conf
+│   └── borders/
+│       ├── current.conf                # Contém: include ./<preset>.conf
+│       └── <preset>.conf
 │
 ├── swaylock/.config/swaylock/
-│   ├── base                           # Configurações de comportamento e layout
-│   ├── config                         # Arquivo final gerado (base + tema ativo)
+│   ├── base                            # Configurações de layout
+│   ├── config                          # Arquivo final gerado (base + tema ativo)
 │   └── colors/
-│       ├── current.conf               # Nome do tema ativo
+│       ├── current.conf                # Nome do tema ativo
 │       └── <tema>.conf
 │
-├── swaync/.config/swaync/colors/
-│   ├── current.css                    # Contém: @import "<tema>.css";
-│   └── <tema>.css
+├── swaync/.config/swaync/
+│   ├── style.css                       # Contém imports de colors/current.css e borders/current.css
+│   ├── colors/
+│   │   ├── current.css                 # Contém: @import "<tema>.css";
+│   │   └── <tema>.css
+│   └── borders/
+│       ├── current.css                 # Contém: @import "<preset>.css";
+│       └── <preset>.css
 │
-└── waybar/.config/waybar/colors/
-    ├── current.css                    # Contém: @import "<tema>.css";
-    └── <tema>.css
+└── waybar/.config/waybar/
+    ├── style.css                       # Contém imports de colors/current.css e borders/current.css
+    ├── colors/
+    │   ├── current.css                 # Contém: @import "<tema>.css";
+    │   └── <tema>.css
+    └── borders/
+        ├── current.css                 # Contém: @import "<preset>.css";
+        └── <preset>.css
 ```
 
 ---
 
-## 3. Como Acontece a "Mágica" (Mecanismos de Hot-Reload)
+## 3. Presets Padronizados de Borda (Border Suite)
 
-Cada software no ecossistema Wayland/Linux gerencia estilos de forma diferente. Abaixo está o detalhamento de como a atualização acontece em cada um:
+O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curvatura de cantos com estilo visível (colorido) ou invisível (sem borda):
 
-| Componente | Como o tema é apontado | Como o reload dinâmico acontece |
+| Identificador | Nível de Raio | Borda / Contorno | Descrição |
+| :--- | :--- | :--- | :--- |
+| `sharp-none` | **0px** (Reto / Quadrado) | 0px / Nenhuma | Cantos vivos, janelas e caixas sem linha perimetral |
+| `sharp-colored` | **0px** (Reto / Quadrado) | 2px Sólida | Cantos vivos com borda sólida na cor de destaque do tema ativo |
+| `rounded-none` | **10px** (Moderado) | 0px / Nenhuma | Cantos arredondados suaves sem linha perimetral |
+| `rounded-colored` | **10px** (Moderado) | 2px Sólida | Cantos arredondados com borda colorida ativa |
+| `extra-none` | **18px** (Extra Redondo) | 0px / Nenhuma | Curvatura pronunciada moderna sem moldura |
+| `extra-colored` | **18px** (Extra Redondo) | 2px Sólida | Curvatura pronunciada com moldura na cor de destaque |
+
+---
+
+## 4. Mecanismos de Hot-Reload
+
+| Componente | Sistema de Cores | Sistema de Bordas e Raio |
 | :--- | :--- | :--- |
-| **Kitty** | `colors/current.conf` faz `include ./<tema>.conf` | Envia o sinal UNIX `SIGUSR1` para todos os processos kitty (`killall -SIGUSR1 kitty`). O Kitty relê sua configuração sem fechar terminais abertos. |
-| **Waybar** | `colors/current.css` faz `@import "<tema>.css";` | Envia o sinal UNIX `SIGUSR2` (`killall -SIGUSR2 waybar`). O Waybar recarrega o stylesheet CSS instantaneamente mantendo o layout e módulos ativos. |
-| **SwayNC** | `colors/current.css` faz `@import "<tema>.css";` | Invoca o cliente oficial IPC: `swaync-client -rs` (recarrega estilos) e `swaync-client -R` (recarrega configuração). |
-| **Swaylock** | `cat base colors/<tema>.conf > config` | O Swaylock é um utilitário sob demanda (executado apenas no bloqueio). A concatenação da base com a paleta gera o `config` final que será lido no próximo lock. |
-| **Rofi** | `colors/current.rasi` faz `@import "<tema>.rasi"` | O Rofi é invocado sob demanda via atalhos. Ao abrir qualquer launcher ou menu, o arquivo `current.rasi` já estará apontando para a paleta escolhida. |
-
-### Fluxo de Execução do `global-theme-selector.sh`
-
-1. **Importação**: Faz `source` dos módulos em `scripts/components/`.
-2. **Detecção de Estado**: Lê `~/.config/.current_theme` (ou infere dos componentes) para destacar o tema atual no menu.
-3. **Seleção**:
-   - Se recebeu argumento via terminal (ex: `./global-theme-selector.sh gruvbox`), usa-o diretamente.
-   - Se executado sem argumentos, abre o `rofi -dmenu` com a lista curada.
-4. **Validação**: Confere se o tema solicitado pertence à lista autorizada.
-5. **Aplicação Concorrente**: Executa a função `apply_<component>_theme "$chosen"` para cada aplicação, registrando eventuais falhas.
-6. **Persistência & Feedback**: Grava o novo tema em `~/.config/.current_theme` e dispara uma notificação desktop via `notify-send`.
+| **Sway / SwayFX** | `sway/.config/sway/colors/current.conf` é recarregado via `swaymsg reload`. Atualiza as classes `client.focused`, `client.unfocused`, etc. | `sway/.config/sway/borders/current.conf` define `corner_radius`, `default_border` e `default_floating_border`. Executa `swaymsg reload` e sincroniza janelas abertas via `swaymsg "[app_id=.*] border ..."` instantaneamente. |
+| **Waybar** | `killall -SIGUSR2 waybar`. Recarrega o CSS instantaneamente. | `killall -SIGUSR2 waybar`. Recarrega o arquivo `borders/current.css` sobrepondo as regras dos módulos. |
+| **SwayNC** | `swaync-client -rs` e `swaync-client -R`. | `swaync-client -rs` e `swaync-client -R`. Atualiza `border-radius` e `box-shadow` perimetral dos cards e painel. |
+| **Kitty** | `killall -SIGUSR1 kitty`. | Gerenciado automaticamente pela moldura e cantos do SwayFX. |
+| **Rofi** | Sob demanda ao abrir menus. | Sob demanda ao abrir menus (`@import "borders/current.rasi"` em `config.rasi` e launchers). |
+| **Swaylock** | Concatenação prévia (`base + color > config`). | Sob demanda ao bloquear a sessão. |
 
 ---
 
-## 4. Guia: Como Adicionar uma Nova Cor / Tema
+## 5. Guia: Como Adicionar um Novo Tema ou Preset
 
-Para adicionar um novo tema (por exemplo, `catppuccin` ou `dracula`), siga os passos abaixo:
+### Adicionar uma Nova Paleta de Cores (Theme Suite)
+1. Crie o arquivo `<novo_tema>.<ext>` em:
+   - `kitty/.config/kitty/colors/<novo_tema>.conf`
+   - `rofi/.config/rofi/colors/<novo_tema>.rasi`
+   - `sway/.config/sway/colors/<novo_tema>.conf`
+   - `swaylock/.config/swaylock/colors/<novo_tema>.conf`
+   - `swaync/.config/swaync/colors/<novo_tema>.css`
+   - `waybar/.config/waybar/colors/<novo_tema>.css`
+2. Adicione o identificador ao array `AVAILABLE_THEMES` em [scripts/global-theme-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-theme-selector.sh).
 
-### Passo 1: Criar o arquivo de paleta em cada componente
-
-Certifique-se de que o nome base do arquivo seja idêntico em todas as pastas (letras minúsculas, ex: `catppuccin`):
-
-1. **Kitty** (`kitty/.config/kitty/colors/catppuccin.conf`):
-   Defina foreground, background e as 16 cores (`color0` a `color15`).
-2. **Rofi** (`rofi/.config/rofi/colors/catppuccin.rasi`):
-   Defina as variáveis `@background`, `@background-alt`, `@foreground`, `@selected`, `@active` e `@urgent`.
-3. **Swaylock** (`swaylock/.config/swaylock/colors/catppuccin.conf`):
-   Defina as diretivas de cores hexadecimais (`color`, `inside-color`, `ring-color`, `key-hl-color`, `text-color`, etc.).
-4. **SwayNC** (`swaync/.config/swaync/colors/catppuccin.css`):
-   Defina as variáveis `@define-color cc-bg`, `@define-color noti-bg`, `@define-color noti-border-color`, etc.
-5. **Waybar** (`waybar/.config/waybar/colors/catppuccin.css`):
-   Defina as variáveis CSS `@define-color background`, `@define-color foreground`, etc.
-
-### Passo 2: Registrar o tema na lista curada
-
-Abra o arquivo [scripts/global-theme-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-theme-selector.sh) e adicione o identificador ao array `AVAILABLE_THEMES`:
-
-```bash
-AVAILABLE_THEMES=(
-    "nord"
-    "gruvbox"
-    "catppuccin"   # <-- adicione o novo tema aqui
-)
-```
-
-### Passo 3: Testar e Validar
-
-Você pode testar isoladamente um único componente antes de rodar o seletor global:
-```bash
-# Teste unitário de um componente
-./scripts/components/kitty.sh catppuccin
-./scripts/components/waybar.sh catppuccin
-
-# Teste global de todos os componentes
-./scripts/global-theme-selector.sh catppuccin
-```
+### Adicionar um Novo Preset de Bordas (Border Suite)
+1. Crie o arquivo `<novo_preset>.<ext>` em:
+   - `sway/.config/sway/borders/<novo_preset>.conf`
+   - `waybar/.config/waybar/borders/<novo_preset>.css`
+   - `swaync/.config/swaync/borders/<novo_preset>.css`
+   - `rofi/.config/rofi/borders/<novo_preset>.rasi`
+2. Adicione o identificador ao array `AVAILABLE_PRESETS` e o rótulo descritivo em `PRESET_LABELS` no arquivo [scripts/global-border-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-border-selector.sh).
 
 ---
 
-## 5. Convenções para Agentes e Desenvolvedores
+## 6. Convenções para Agentes e Desenvolvedores
 
-- **Nunca hardcode paths absolutos de usuário** (`/home/joaofedora`): utilize sempre referências relativas ao script via `BASH_SOURCE` ou a variável de ambiente `$HOME`.
-- **Preserve a idempotência**: rodar o script com o tema que já está ativo deve reaplicar os arquivos e sinais com segurança e sem erros.
-- **Tratamento de Erros**: Qualquer novo módulo adicionado em `scripts/components/` deve:
-  - Validar a existência do diretório e arquivo de cores antes de escrever.
+- **Nunca hardcode paths absolutos de usuário** (`/home/joaofedora`): utilize sempre `$HOME` ou referências relativas via `BASH_SOURCE`.
+- **Preserve a idempotência**: invocar qualquer script com o tema ou preset já ativo deve reaplicar os arquivos e sinais com segurança e sem erros.
+- **Tratamento de Erros**: Qualquer novo módulo adicionado em `scripts/components/` ou `scripts/components/borders/` deve:
+  - Validar a existência dos diretórios e arquivos de origem antes de escrever.
   - Retornar código de saída `0` para sucesso e `1` (com mensagem em `stderr`) para falha.
-  - Implementar a função `get_<component>_theme` para permitir introspecção pelo orquestrador.
+  - Implementar funções de consulta no formato `get_<component>_theme` e `get_<component>_border`.
