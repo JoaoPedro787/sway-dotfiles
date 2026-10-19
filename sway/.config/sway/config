@@ -59,7 +59,7 @@ exec wlsunset
 ### Aparência e Efeitos visuais (SwayFX)
 # ------------------------------------------------------------------------------
 # Bordas, Espaçamentos e Cores
-gaps inner 15
+gaps inner 10
 include ~/.config/sway/borders/current.conf
 
 # Animações
