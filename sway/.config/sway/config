@@ -3,6 +3,10 @@
 # Local padrão: ~/.config/sway/config
 # ==============================================================================
 
+# Cursor Icon
+# seat seat0 xcursor_theme cursor_name size
+
+
 ### Variáveis
 # ------------------------------------------------------------------------------
 # Tecla Mod (Mod4 = Super / Windows, Mod1 = Alt)
@@ -16,7 +20,7 @@ set $right l
 
 # Terminal e lançador padrão
 set $term kitty
-set $menu ~/.config/rofi/scripts/launcher_t4
+set $menu ~/.config/rofi/scripts/launcher_t1
 
 
 ### Configurações de Input
@@ -50,7 +54,7 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output eDP-1 {
     mode 1920x1200@60Hz
     scale 1.25
-    bg ~/Pictures/Desktop/ign_cyberpunk-01-12.jpg fill
+    bg ~/Pictures/wallpapers/dio-amoled.png fill
 }
 
 # Night Light
