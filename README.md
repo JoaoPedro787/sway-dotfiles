@@ -191,12 +191,17 @@ The border engine provides 6 standardized presets:
 
 ---
 
-## 🎨 Available Themes & Adding New Ones
+## 🎨 Available Themes & Pairing Guide
 
 Currently curated palettes:
+- **Amoled** (Pitch black, minimalist, high contrast)
 - **Nord** (Arctic, cool, and crisp)
 - **Gruvbox** (Warm, retro, and ergonomic)
+- **Catppuccin Mocha** (Soothing pastel dark)
 
+> 🎨 **Looking for recommended GTK themes, icons, and cursor pairings?**  
+> Check the [UI & GTK Theme Pairing Guide](themes.md).
+>
 > 💡 **Want to add a new theme, border preset, or Waybar layout?**  
-> Check the comprehensive developer reference in [AGENTS.md](file:///home/joaofedora/.dotfiles/AGENTS.md). The process is fully standardized and modular.
+> Check the comprehensive developer reference in [AGENTS.md](AGENTS.md). The process is fully standardized and modular.
 

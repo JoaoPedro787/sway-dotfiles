@@ -185,7 +185,7 @@ Diferente das folhas de estilo CSS (que aceitam hot-reload via sinal `SIGUSR2`),
    - `swaylock/.config/swaylock/colors/<novo_tema>.conf`
    - `swaync/.config/swaync/colors/<novo_tema>.css`
    - `waybar/.config/waybar/colors/<novo_tema>.css`
-2. Adicione o identificador ao array `AVAILABLE_THEMES` em [scripts/global-theme-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-theme-selector.sh).
+2. Adicione o identificador ao array `AVAILABLE_THEMES` em [scripts/global-theme-selector.sh](scripts/global-theme-selector.sh).
 
 ### Adicionar um Novo Preset de Bordas (Border Suite)
 1. Crie o arquivo `<novo_preset>.<ext>` em:
@@ -193,21 +193,21 @@ Diferente das folhas de estilo CSS (que aceitam hot-reload via sinal `SIGUSR2`),
    - `waybar/.config/waybar/borders/<novo_preset>.css`
    - `swaync/.config/swaync/borders/<novo_preset>.css`
    - `rofi/.config/rofi/borders/<novo_preset>.rasi`
-2. Adicione o identificador ao array `AVAILABLE_PRESETS` e o rótulo descritivo em `PRESET_LABELS` no arquivo [scripts/global-border-selector.sh](file:///home/joaofedora/.dotfiles/scripts/global-border-selector.sh).
+2. Adicione o identificador ao array `AVAILABLE_PRESETS` e o rótulo descritivo em `PRESET_LABELS` no arquivo [scripts/global-border-selector.sh](scripts/global-border-selector.sh).
 
 ### Adicionar um Novo Layout de Waybar (Waybar Layout Suite)
 1. Crie uma nova pasta em `waybar/.config/waybar/layouts/<nome_do_layout>/`.
 2. Adicione os arquivos:
    - `config.jsonc`: estrutura JSONC de módulos e posicionamento da barra.
    - `style.css`: regras CSS específicas do layout, contendo no início `@import "colors/current.css";` e no final `@import "borders/current.css";`.
-3. (Opcional) Adicione um rótulo amigável no array associativo `LAYOUT_LABELS` em [scripts/waybar-layout-selector.sh](file:///home/joaofedora/.dotfiles/scripts/waybar-layout-selector.sh).
+3. (Opcional) Adicione um rótulo amigável no array associativo `LAYOUT_LABELS` em [scripts/waybar-layout-selector.sh](scripts/waybar-layout-selector.sh).
 4. O layout será descoberto dinamicamente pelo seletor Rofi e pela CLI (`./scripts/waybar-layout-selector.sh <nome_do_layout>`).
 
 ---
 
 ## 7. Convenções para Agentes e Desenvolvedores
 
-- **Nunca hardcode paths absolutos de usuário** (`/home/joaofedora`): utilize sempre `$HOME` ou referências relativas via `BASH_SOURCE`.
+- **Nunca hardcode paths absolutos de usuário** (`/home/<user>`): utilize sempre `$HOME` ou referências relativas via `BASH_SOURCE`.
 - **Preserve a idempotência**: invocar qualquer script com o tema, preset ou layout já ativo deve reaplicar os arquivos e sinais com segurança e sem erros.
 - **Tratamento de Erros**: Qualquer novo módulo adicionado em `scripts/components/` ou `scripts/components/borders/` deve:
   - Validar a existência dos diretórios e arquivos de origem antes de escrever.
