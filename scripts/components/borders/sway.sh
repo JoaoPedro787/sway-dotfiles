@@ -45,8 +45,8 @@ EOF
             swaymsg "[app_id=.*] border none" 2>/dev/null || true
             swaymsg "[class=.*] border none" 2>/dev/null || true
         elif [[ "$preset" == *"-colored" ]]; then
-            swaymsg "[app_id=.*] border pixel 2" 2>/dev/null || true
-            swaymsg "[class=.*] border pixel 2" 2>/dev/null || true
+            swaymsg "[app_id=.*] border pixel 1" 2>/dev/null || true
+            swaymsg "[class=.*] border pixel 1" 2>/dev/null || true
         fi
     fi
 

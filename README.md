@@ -146,11 +146,11 @@ The border engine provides 6 standardized presets:
 | Preset | Corner Radius | Border Outline |
 | :--- | :--- | :--- |
 | `sharp-none` | **0px** (Sharp) | None (0px) |
-| `sharp-colored` | **0px** (Sharp) | 2px Accent Solid |
+| `sharp-colored` | **0px** (Sharp) | 1px Accent Solid |
 | `rounded-none` | **10px** (Moderate) | None (0px) |
-| `rounded-colored` | **10px** (Moderate) | 2px Accent Solid |
+| `rounded-colored` | **10px** (Moderate) | 1px Accent Solid |
 | `extra-none` | **18px** (Extra) | None (0px) |
-| `extra-colored` | **18px** (Extra) | 2px Accent Solid |
+| `extra-colored` | **18px** (Extra) | 1px Accent Solid |
 
 ---
 

@@ -20,5 +20,5 @@
 #workspaces button,
 #mpris {
   border-radius: 0px;
-  border: 2px solid @border-accent;
+  border: 1px solid @border-accent;
 }

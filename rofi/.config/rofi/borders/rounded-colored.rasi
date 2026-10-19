@@ -3,7 +3,7 @@
  **/
 
 window {
-    border: 2px solid;
+    border: 1px solid;
     border-radius: 10px;
     border-color: @selected;
 }

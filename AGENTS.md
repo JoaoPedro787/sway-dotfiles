@@ -100,11 +100,11 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
 | Identificador | Nível de Raio | Borda / Contorno | Descrição |
 | :--- | :--- | :--- | :--- |
 | `sharp-none` | **0px** (Reto / Quadrado) | 0px / Nenhuma | Cantos vivos, janelas e caixas sem linha perimetral |
-| `sharp-colored` | **0px** (Reto / Quadrado) | 2px Sólida | Cantos vivos com borda sólida na cor de destaque do tema ativo |
+| `sharp-colored` | **0px** (Reto / Quadrado) | 1px Sólida | Cantos vivos com borda sólida na cor de destaque do tema ativo |
 | `rounded-none` | **10px** (Moderado) | 0px / Nenhuma | Cantos arredondados suaves sem linha perimetral |
-| `rounded-colored` | **10px** (Moderado) | 2px Sólida | Cantos arredondados com borda colorida ativa |
+| `rounded-colored` | **10px** (Moderado) | 1px Sólida | Cantos arredondados com borda colorida ativa |
 | `extra-none` | **18px** (Extra Redondo) | 0px / Nenhuma | Curvatura pronunciada moderna sem moldura |
-| `extra-colored` | **18px** (Extra Redondo) | 2px Sólida | Curvatura pronunciada com moldura na cor de destaque |
+| `extra-colored` | **18px** (Extra Redondo) | 1px Sólida | Curvatura pronunciada com moldura na cor de destaque |
 
 ---
 
