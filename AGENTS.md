@@ -117,16 +117,17 @@ Ambos foram desenhados com base em quatro princípios:
 
 ## 3. Presets Padronizados de Borda (Border Suite)
 
-O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curvatura de cantos com estilo visível (colorido) ou invisível (sem borda):
+O sistema de bordas define 6 presets padronizados, combinando 2 níveis de curvatura de cantos com variações de espessura de borda (sem borda, 1px sólida ou 2px sólida):
 
 | Identificador | Nível de Raio | Borda / Contorno | Descrição |
 | :--- | :--- | :--- | :--- |
 | `sharp-none` | **0px** (Reto / Quadrado) | 0px / Nenhuma | Cantos vivos, janelas e caixas sem linha perimetral |
-| `sharp-colored` | **0px** (Reto / Quadrado) | 1px Sólida | Cantos vivos com borda sólida na cor de destaque do tema ativo |
+| `sharp-colored` | **0px** (Reto / Quadrado) | 1px Sólida | Cantos vivos com borda sólida de 1px na cor de destaque do tema ativo |
+| `sharp-colored-2px` | **0px** (Reto / Quadrado) | 2px Sólida | Cantos vivos com borda sólida de 2px destacada na cor do tema |
 | `rounded-none` | **10px** (Moderado) | 0px / Nenhuma | Cantos arredondados suaves sem linha perimetral |
-| `rounded-colored` | **10px** (Moderado) | 1px Sólida | Cantos arredondados com borda colorida ativa |
-| `extra-none` | **18px** (Extra Redondo) | 0px / Nenhuma | Curvatura pronunciada moderna sem moldura |
-| `extra-colored` | **18px** (Extra Redondo) | 1px Sólida | Curvatura pronunciada com moldura na cor de destaque |
+| `rounded-colored` | **10px** (Moderado) | 1px Sólida | Cantos arredondados com borda colorida de 1px ativa |
+| `rounded-colored-2px` | **10px** (Moderado) | 2px Sólida | Cantos arredondados com borda colorida de 2px destacada |
+
 
 ---
 
