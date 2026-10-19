@@ -1,0 +1,14 @@
+/**
+ *
+ * AMOLED (Pure Black & White) Colors for Rofi
+ *
+ **/
+
+* {
+    background:     #000000FF;
+    background-alt: #121212FF;
+    foreground:     #FFFFFFFF;
+    selected:       #FFFFFFFF;
+    active:         #D0D0D0FF;
+    urgent:         #FFFFFFFF;
+}

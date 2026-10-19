@@ -17,32 +17,32 @@ indicator
 indicator-radius=125
 indicator-thickness=8
 indicator-idle-visible
-# --- Paleta Catppuccin Mocha ---
+# --- Paleta AMOLED (100% Monocromático Puro) ---
 
-# Fundo sólido (base #1e1e2e)
-color=1e1e2e
+# Fundo sólido (#000000)
+color=000000
 
-# Interior do anel (surface0 #313244 / lavender #b4befe / blue #89b4fa / red #f38ba8)
-inside-color=313244
-inside-clear-color=b4befe
-inside-ver-color=89b4fa
-inside-wrong-color=f38ba8
+# Interior do anel
+inside-color=000000
+inside-clear-color=ffffff
+inside-ver-color=cccccc
+inside-wrong-color=888888
 
-# Anel externo (surface2 #585b70 / lavender #b4befe / blue #89b4fa / red #f38ba8)
-ring-color=585b70
-ring-clear-color=b4befe
-ring-ver-color=89b4fa
-ring-wrong-color=f38ba8
+# Anel externo
+ring-color=ffffff
+ring-clear-color=ffffff
+ring-ver-color=cccccc
+ring-wrong-color=888888
 
-# Feedback de digitação (green #a6e3a1 / red #f38ba8)
-key-hl-color=a6e3a1
-bs-hl-color=f38ba8
+# Feedback de digitação
+key-hl-color=ffffff
+bs-hl-color=888888
 
-# Textos (text #cdd6f4 / base #1e1e2e)
-text-color=cdd6f4
-text-clear-color=1e1e2e
-text-ver-color=1e1e2e
-text-wrong-color=1e1e2e
+# Textos
+text-color=ffffff
+text-clear-color=000000
+text-ver-color=000000
+text-wrong-color=ffffff
 
 # Linhas divisórias transparentes
 line-color=00000000

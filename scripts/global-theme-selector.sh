@@ -24,6 +24,7 @@ AVAILABLE_THEMES=(
     "nord"
     "gruvbox"
     "catppuccin-mocha"
+    "amoled"
 )
 
 # Detect current active theme (checks kitty, rofi, or fallback state)

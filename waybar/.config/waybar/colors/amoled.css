@@ -1,0 +1,36 @@
+/* ===========================
+ * AMOLED Palette for Waybar (100% Monochrome)
+ * =========================== */
+
+@define-color base-bg #000000;
+@define-color base-bg-solid #000000;
+@define-color base-fg #ffffff;
+
+@define-color ws-bg #000000;
+@define-color ws-bg-active #ffffff;
+@define-color ws-bg-urgent #ffffff;
+
+@define-color ws-fg #888888;
+@define-color ws-fg-active #000000;
+@define-color ws-fg-urgent #000000;
+
+@define-color mpris-border #ffffff;
+@define-color border-accent #ffffff;
+
+@define-color cpu-fg #ffffff;
+@define-color mem-fg #ffffff;
+@define-color clock-fg #ffffff;
+@define-color clock-simple-fg #cccccc;
+@define-color window-fg @base-fg;
+@define-color audio-fg #ffffff;
+@define-color audio-muted-fg #666666;
+@define-color tray-fg #ffffff;
+@define-color bluetooth-fg #ffffff;
+@define-color battery-fg #ffffff;
+@define-color logo-fg #ffffff;
+@define-color cava-fg #ffffff;
+@define-color power-fg #ffffff;
+
+@define-color tooltip-bg #000000;
+@define-color tooltip-border #ffffff;
+@define-color sep-fg #444444;

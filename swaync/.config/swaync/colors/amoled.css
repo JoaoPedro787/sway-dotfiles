@@ -1,0 +1,18 @@
+/* =============================================================================
+ * AMOLED (Pure Black & White) Palette for SwayNC
+ * ============================================================================= */
+
+@define-color cc-bg #000000;
+@define-color cc-card #111111;
+@define-color cc-card-hover #222222;
+@define-color cc-border #ffffff;
+
+@define-color cc-text #ffffff;
+@define-color cc-text-body #e0e0e0;
+@define-color cc-text-muted #888888;
+
+@define-color cc-accent #ffffff;
+@define-color cc-critical #ffffff;
+@define-color cc-critical-hover #e0e0e0;
+@define-color cc-critical-active #cccccc;
+@define-color cc-warning #d0d0d0;
