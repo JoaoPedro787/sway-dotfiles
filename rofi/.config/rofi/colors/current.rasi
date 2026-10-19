@@ -3,4 +3,4 @@
  * Automatically updated by global theme selector
  **/
 
-@import "gruvbox.rasi"
+@import "nord.rasi"
