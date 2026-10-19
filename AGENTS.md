@@ -125,7 +125,37 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
 
 ---
 
-## 4. Mecanismos de Hot-Reload
+## 4. Arquitetura Modular da Waybar (Waybar Layout Suite)
+
+A Waybar foi desenhada para permitir a coexistência de múltiplos estilos de barra (ex: barras completas de ponta a ponta, barras flutuantes, barras minimalistas, barras duplas) sem perder a integração cromática e geométrica global.
+
+### 4.1. Isolamento por Pastas (`layouts/<nome>/`)
+Cada layout reside em uma pasta dedicada sob `waybar/.config/waybar/layouts/<nome>/`:
+- **`config.jsonc`**: Estrutura JSONC de módulos, ordem de exibição, posições e margens.
+- **`style.css`**: Estilização visual dos módulos e da barra. Deve conter obrigatoriamente:
+  - `@import "colors/current.css";` (no topo, importando variáveis como `@base-bg`, `@ws-bg`, etc.)
+  - `@import "borders/current.css";` (ao final, aplicando raio de curvatura e bordas ativas)
+- **Symlinks locais de suporte**:
+  - `colors -> ../../colors`
+  - `borders -> ../../borders`
+  Estes symlinks garantem que o motor GTK CSS resolva os imports com sucesso, independentemente de o arquivo ser lido a partir do symlink raiz ou diretamente de dentro da subpasta.
+
+### 4.2. Chaveamento por Links Simbólicos
+Na raiz de `~/.config/waybar/`:
+- `config.jsonc` aponta relativamente para `layouts/<ativo>/config.jsonc`.
+- `style.css` aponta relativamente para `layouts/<ativo>/style.css`.
+- O layout ativo é persistido em `~/.config/.current_waybar_layout`.
+
+### 4.3. Ciclo de Vida do Processo e Reinicialização
+Diferente das folhas de estilo CSS (que aceitam hot-reload via sinal `SIGUSR2`), a estrutura de módulos do `config.jsonc` só é lida na inicialização do binário da Waybar. Por essa razão:
+1. O submódulo `scripts/components/waybar-layout.sh` encerra graciosamente o processo existente (`killall waybar`).
+2. Aguarda a liberação do processo.
+3. Spawna a nova barra através de `swaymsg exec waybar`.
+4. O uso de `swaymsg exec waybar` faz com que o Sway adote a nova Waybar como processo filho oficial da sessão Wayland, garantindo persistência sem depender da janela de terminal que invocou o script.
+
+---
+
+## 5. Mecanismos de Hot-Reload
 
 | Componente | Sistema de Cores | Sistema de Bordas e Raio | Sistema de Layout (Waybar) |
 | :--- | :--- | :--- | :--- |
@@ -138,7 +168,8 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
 
 ---
 
-## 5. Guia: Como Adicionar Novos Elementos
+## 6. Guia: Como Adicionar Novos Elementos
+
 
 ### Adicionar uma Nova Paleta de Cores (Theme Suite)
 1. Crie o arquivo `<novo_tema>.<ext>` em:
@@ -168,7 +199,7 @@ O sistema de bordas define 6 presets padronizados, combinando 3 níveis de curva
 
 ---
 
-## 6. Convenções para Agentes e Desenvolvedores
+## 7. Convenções para Agentes e Desenvolvedores
 
 - **Nunca hardcode paths absolutos de usuário** (`/home/joaofedora`): utilize sempre `$HOME` ou referências relativas via `BASH_SOURCE`.
 - **Preserve a idempotência**: invocar qualquer script com o tema, preset ou layout já ativo deve reaplicar os arquivos e sinais com segurança e sem erros.

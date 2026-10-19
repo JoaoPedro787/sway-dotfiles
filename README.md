@@ -12,23 +12,25 @@
 
 ## 🚀 The Core Differentiator: Unified Dynamic Engines (Hot-Reload)
 
-Switching themes or window geometry across Linux setups usually requires editing configuration files in disparate directories and restarting either active applications or the entire graphical session.
-
-This repository provides two dedicated, decoupled orchestrators:
+Switching themes or window geometry across Linux setups usually requires editing configuration files in disparate directories and restarting either active applications or the entire graphical sessThis repository provides three dedicated, decoupled orchestrators:
 1. **`global-theme-selector.sh`**: Instantly harmonizes color palettes across Kitty, Rofi, Sway, Swaylock, SwayNC, and Waybar.
 2. **`global-border-selector.sh`**: Dynamically adjusts corner radiuses (0px, 10px, 18px) and border styles (visible accent color vs invisible border) across the entire suite in real time.
+3. **`waybar-layout-selector.sh`**: Seamlessly switches between modular Waybar layouts and geometries while maintaining full synchronization with the global color and border engines.
 
 ```text
-                                 ┌─► Sway / SwayFX (swaymsg IPC - Window Borders & Radius)
-                                 ├─► Waybar        (SIGUSR2 - CSS Hot Reload)
+                                  ┌─► Sway / SwayFX (swaymsg IPC - Window Borders & Radius)
+                                  ├─► Waybar        (SIGUSR2 - CSS Hot Reload)
 [ global-border-selector.sh ] ───┼─► SwayNC        (IPC Client - Card & Center Styles)
         (Rofi or CLI)            └─► Rofi          (Dynamic Window Border & Radius)
+
+[ waybar-layout-selector.sh ] ───► Waybar          (Dynamic Symlinks & Hot Process Reload)
+        (Rofi or CLI)                              (Inherits Colors & Border Presets)
 ```
 
 ### ✨ Engine Highlights
-- **Dual Usage Mode**: Interactive selection via **Rofi** menu or direct script invocation through the **CLI** (e.g., `./scripts/global-border-selector.sh rounded-colored`).
+- **Dual Usage Mode**: Interactive selection via **Rofi** menu or direct script invocation through the **CLI** (e.g., `./scripts/global-border-selector.sh rounded-colored` or `./scripts/waybar-layout-selector.sh example`).
 - **Zero Session Restarts**: Leverages POSIX kernel signals (`SIGUSR1`, `SIGUSR2`) and Sway IPC protocols to apply changes on the fly.
-- **Theme Synchronization**: When switching color themes, active colored borders automatically adopt the new theme's accent color.
+- **Theme & Border Synchronization**: When switching Waybar layouts, the newly loaded bar immediately inherits the currently active theme palette and border preset.
 - **Decoupled Architecture**: Each application is handled by a standalone helper in `scripts/components/` and `scripts/components/borders/`.
 - **Visual Feedback**: Desktop notifications via `notify-send` report success or component-level warnings.
 
@@ -43,7 +45,7 @@ This repository provides two dedicated, decoupled orchestrators:
 | **Styling & Palettes** | CSS3 & RASI | Modular stylesheets defining color variables across UI components |
 | **Window Manager** | [SwayFX](https://github.com/WillPower3309/swayfx) | Wayland compositor with rounded corners, window shadows, and blur effects |
 | **Terminal Emulator** | [Kitty](https://sw.kovidgoyal.net/kitty/) | Fast GPU-accelerated terminal with native live-reloading support |
-| **Status Bar** | [Waybar](https://github.com/Alexays/Waybar) | Customizable bar styled with CSS and real-time stylesheet updates |
+| **Status Bar** | [Waybar](https://github.com/Alexays/Waybar) | Customizable bar with modular layout switching and real-time stylesheet updates |
 | **Notification Center** | [SwayNC](https://github.com/ErikReider/SwayNotificationCenter) | Sleek notification center and quick-settings panel for Wayland |
 | **App Launcher & Menus**| [Rofi (Wayland)](https://github.com/lbonn/rofi) | Application launcher, power menus, and style picker interface |
 | **Screen Locker** | [Swaylock](https://github.com/swaywm/swaylock) | Secure screen locker dynamically styled before execution |
@@ -63,24 +65,26 @@ The repository uses GNU Stow-ready modular packages, mirroring `$HOME/.config/`:
 ├── sway/                              # Core SwayFX config, keybindings, colors/, and borders/
 ├── swaylock/                          # Swaylock layout base + colors/ + generated config
 ├── swaync/                            # SwayNC config.json + style.css + colors/ + borders/
-├── waybar/                            # Waybar config.jsonc + style.css + colors/ + borders/
+├── waybar/                            # Waybar layouts/ + colors/ + borders/ + active symlinks
+│   └── layouts/                       # Modular Waybar layout variants (default, example, etc.)
 │
 ├── scripts/
 │   ├── global-theme-selector.sh       # Main theme orchestrator (Rofi & CLI)
 │   ├── global-border-selector.sh      # Main border & radius orchestrator (Rofi & CLI)
-│   └── components/                    # Isolated per-application theme modules
+│   ├── waybar-layout-selector.sh      # Main Waybar layout orchestrator (Rofi & CLI)
+│   └── components/                    # Isolated per-application theme and layout modules
 │       ├── kitty.sh
 │       ├── rofi.sh
 │       ├── sway.sh
 │       ├── swaylock.sh
 │       ├── swaync.sh
-│       ├── waybar.sh
+│       ├── waybar.sh                  # Waybar color component
+│       ├── waybar-layout.sh           # Waybar layout switcher component
 │       └── borders/                   # Isolated per-application border modules
 │           ├── rofi.sh
 │           ├── sway.sh
 │           ├── swaync.sh
 │           └── waybar.sh
-│
 ├── AGENTS.md                          # Technical architecture & developer guide
 └── README.md                          # Project documentation
 ```
@@ -133,9 +137,42 @@ stow fish kitty rofi sway swaylock swaync waybar
 # Sharp with no border
 ~/.dotfiles/scripts/global-border-selector.sh sharp-none
 
-# Extra rounded with no border
-~/.dotfiles/scripts/global-border-selector.sh extra-none
+### 5. Running the Waybar Layout Selector
+
+**Interactive Mode (Rofi Menu):**
+```bash
+~/.dotfiles/scripts/waybar-layout-selector.sh
 ```
+
+**Direct CLI Mode:**
+```bash
+# Switch to standard full layout
+~/.dotfiles/scripts/waybar-layout-selector.sh default
+
+# Switch to floating example layout
+~/.dotfiles/scripts/waybar-layout-selector.sh example
+
+# List all available layouts
+~/.dotfiles/scripts/waybar-layout-selector.sh --list
+```
+
+---
+
+## 📊 Modular Waybar Layouts
+
+Waybar configurations are modularized under `waybar/.config/waybar/layouts/`. The active configuration and style are managed via dynamic symlinks (`config.jsonc` and `style.css`), allowing instant switching without losing theme or border styling.
+
+| Layout | Style & Geometria | Modules & Description |
+| :--- | :--- | :--- |
+| `default` | Edge-to-edge top bar (44px) | Full status bar with workspace list, cava visualizer, mpris media player, hardware monitors (CPU/RAM), tray, and power menu. |
+| `example` | Floating island bar (40px) | Minimalist floating bar with side margins, centered date/clock, essential audio, network, battery, and notification controls. |
+
+### 🔄 Automatic Color & Border Inheritance
+Every Waybar layout automatically connects to the Theme Suite and Border Suite via standard imports:
+- `@import "colors/current.css";` (loaded at top)
+- `@import "borders/current.css";` (loaded at bottom)
+
+When switching themes (`global-theme-selector.sh`) or border presets (`global-border-selector.sh`), your active Waybar layout updates immediately via `SIGUSR2` without restarting the process.
 
 ---
 
@@ -160,5 +197,6 @@ Currently curated palettes:
 - **Nord** (Arctic, cool, and crisp)
 - **Gruvbox** (Warm, retro, and ergonomic)
 
-> 💡 **Want to add a new theme or border preset?**  
-> Check the developer reference in [AGENTS.md](file:///home/joaofedora/.dotfiles/AGENTS.md). The process is streamlined: drop a config file with the same identifier into each component's directory and register it in the orchestrator scripts.
+> 💡 **Want to add a new theme, border preset, or Waybar layout?**  
+> Check the comprehensive developer reference in [AGENTS.md](file:///home/joaofedora/.dotfiles/AGENTS.md). The process is fully standardized and modular.
+
