@@ -11,11 +11,11 @@
 @define-color ws-bg-urgent #cc241d;
 
 @define-color ws-fg @base-fg;
-@define-color ws-fg-active #fe8019;
+@define-color ws-fg-active #b8bb26;
 @define-color ws-fg-urgent #fb4934;
 
 @define-color mpris-border @base-bg-solid;
-@define-color border-accent #fe8019;
+@define-color border-accent #b8bb26;
 
 @define-color cpu-fg #8ec07c;
 @define-color mem-fg #d3869b;
