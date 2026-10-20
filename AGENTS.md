@@ -106,7 +106,7 @@ Ambos foram desenhados com base em quatro princípios:
         │   ├── style.css
         │   ├── colors -> ../../colors
         │   └── borders -> ../../borders
-        ├── retro/                      # Layout retrô minimalista com moldura de borda
+        ├── simple/                     # Layout minimalista com moldura de borda
         │   ├── config.jsonc
         │   ├── style.css
         │   ├── colors -> ../../colors

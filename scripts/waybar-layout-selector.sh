@@ -21,7 +21,7 @@ source "$COMPONENT_FILE"
 declare -A LAYOUT_LABELS=(
     ["default"]="󰓎 Default - Layout Padrão Completo"
     ["example"]="󰓎 Example - Barra Flutuante com Relógio Central"
-    ["retro"]="󰓎 Retro - Barra Retrô Minimalista"
+    ["simple"]="󰓎 Simple - Barra Minimalista"
     ["block-1"]="󰓎 Block 1 - Badges Coloridos e Bordas Sólidas"
     ["block-2"]="󰓎 Block 2 - Ícones Coloridos e Contornos"
     ["block-3"]="󰓎 Block 3 - Módulos em Bloco Uniforme"
