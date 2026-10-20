@@ -22,6 +22,10 @@ declare -A LAYOUT_LABELS=(
     ["default"]="󰓎 Default - Layout Padrão Completo"
     ["example"]="󰓎 Example - Barra Flutuante com Relógio Central"
     ["retro"]="󰓎 Retro - Barra Retrô Minimalista"
+    ["block-1"]="󰓎 Block 1 - Badges Coloridos e Bordas Sólidas"
+    ["block-2"]="󰓎 Block 2 - Ícones Coloridos e Contornos"
+    ["block-3"]="󰓎 Block 3 - Módulos em Bloco Uniforme"
+    ["block-4"]="󰓎 Block 4 - Barra Contínua com Relógio à Direita"
 )
 
 # Discover all available layouts dynamically

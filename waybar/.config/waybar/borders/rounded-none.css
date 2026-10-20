@@ -24,7 +24,12 @@ window#waybar,
 #memory,
 #window,
 #workspaces button,
-#mpris {
+#mpris,
+#disk,
+#custom-cpu_temp,
+#backlight,
+#custom-memory,
+#mode {
   border-radius: 8px;
   border: none;
 }

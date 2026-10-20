@@ -1,0 +1,276 @@
+/* ===========================
+ * Block 2 Layout Style
+ * Ícones Coloridos e Contornos
+ * =========================== */
+@import "colors/current.css";
+
+/* Mapeamento dinâmico para o tema ativo */
+@define-color bg @base-bg-solid;
+@define-color fg @base-fg;
+
+@define-color blue #83a598;
+@define-color blue-dark #458588;
+@define-color pink #d3869b;
+@define-color green #8ec07c;
+@define-color green-dark #689d68;
+@define-color red #ea6962;
+@define-color red-dark #cc241d;
+@define-color orange #e78a4e;
+@define-color yellow #f6c657;
+@define-color yellow-soft #d8a657;
+@define-color white-soft #fff4d2;
+@define-color gray #555555;
+
+/* ===== GLOBAL ===== */
+* {
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  border-radius: 0;
+  border: none;
+  text-shadow: none;
+  transition: none;
+  box-shadow: none;
+}
+
+window#waybar {
+  color: @fg;
+  background: none;
+  font-family: "Iosevka Nerd Font", "JetBrainsMono Nerd Font Propo", "JetBrainsMono NFP", monospace;
+  font-size: 11pt;
+  font-weight: 900;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  padding: 3pt;
+  background: @bg;
+}
+
+/* ===== COMMON PADDING ===== */
+#window,
+#cpu,
+#custom-cpu_temp,
+#custom-cpu_temp.critical,
+#backlight,
+#custom-memory,
+#pulseaudio,
+#pulseaudio.muted,
+#battery,
+#battery.critical,
+#battery.warning,
+#network,
+#bluetooth,
+#custom-notification,
+#clock {
+  padding: 0 1.5pt;
+}
+
+#custom-launcher {
+  color: @blue;
+  border: 2pt solid @blue;
+  padding: 0 6pt;
+}
+
+/* ===== WORKSPACES ===== */
+#workspaces button {
+  color: @white-soft;
+  background: @bg;
+  border: 2pt solid @white-soft;
+  margin-right: 3pt;
+  min-width: 15pt;
+  padding: 0 4.5pt;
+}
+
+#workspaces button:last-child {
+  margin-right: 0;
+}
+
+#workspaces button:hover {
+  color: @pink;
+  border-color: @pink;
+}
+
+#workspaces button.visible,
+#workspaces button.visible:hover {
+  color: @green;
+  border-color: @green;
+}
+
+#workspaces button.urgent {
+  color: @red;
+  border-color: @red;
+}
+
+/* ===== MODULES ===== */
+#window {
+  border: 2pt solid @pink;
+}
+
+#tray {
+  background: @bg;
+  border: 2pt solid @orange;
+  padding: 0 6pt;
+}
+
+#bluetooth {
+  border: 2pt solid @blue;
+}
+
+#cpu {
+  border: 2pt solid @orange;
+}
+
+#custom-cpu_temp {
+  border: 2pt solid @yellow-soft;
+}
+
+#custom-cpu_temp.critical {
+  color: @red-dark;
+  border: 2pt solid @red-dark;
+}
+
+#custom-cpu_temp.unknown {
+  border: 2pt solid @gray;
+}
+
+#backlight {
+  border: 2pt solid @yellow;
+}
+
+#custom-memory {
+  border: 2pt solid @blue-dark;
+}
+
+#pulseaudio {
+  border: 2pt solid @blue;
+}
+
+#pulseaudio.muted {
+  border: 2pt solid @red;
+  color: @red;
+}
+
+#battery {
+  border: 2pt solid @green-dark;
+}
+
+#battery.critical {
+  border: 2pt solid @red-dark;
+}
+
+#battery.warning {
+  border: 2pt solid @orange;
+}
+
+#clock {
+  border: 2pt solid @green;
+}
+
+#network {
+  border: 2pt solid @pink;
+}
+
+#custom-notification {
+  border: 2pt solid @pink;
+  padding: 0 4pt;
+}
+
+#mode {
+  background: @bg;
+  color: @blue;
+  border: 2pt solid @blue;
+  padding: 0 7.5pt;
+}
+
+/* ===========================
+ * Global Borders & Corner Radius
+ * =========================== */
+@import "borders/current.css";
+
+/* Preserva bordas coloridas características do Block 2 */
+#custom-launcher {
+  color: @blue;
+  border: 2pt solid @blue;
+}
+#workspaces button {
+  border: 2pt solid @white-soft;
+}
+#workspaces button:hover {
+  color: @pink;
+  border-color: @pink;
+}
+#workspaces button.visible,
+#workspaces button.visible:hover {
+  color: @green;
+  border-color: @green;
+}
+#workspaces button.urgent {
+  color: @red;
+  border-color: @red;
+}
+#window {
+  border: 2pt solid @pink;
+}
+#tray {
+  background: @bg;
+  border: 2pt solid @orange;
+}
+#bluetooth {
+  border: 2pt solid @blue;
+}
+#cpu {
+  border: 2pt solid @orange;
+}
+#custom-cpu_temp {
+  border: 2pt solid @yellow-soft;
+}
+#custom-cpu_temp.critical {
+  color: @red-dark;
+  border: 2pt solid @red-dark;
+}
+#backlight {
+  border: 2pt solid @yellow;
+}
+#custom-memory {
+  border: 2pt solid @blue-dark;
+}
+#pulseaudio {
+  border: 2pt solid @blue;
+}
+#pulseaudio.muted {
+  border: 2pt solid @red;
+  color: @red;
+}
+#battery {
+  border: 2pt solid @green-dark;
+}
+#battery.critical {
+  border: 2pt solid @red-dark;
+}
+#battery.warning {
+  border: 2pt solid @orange;
+}
+#clock {
+  border: 2pt solid @green;
+}
+#network {
+  border: 2pt solid @pink;
+}
+#custom-notification {
+  border: 2pt solid @pink;
+}
+#mode {
+  background: @bg;
+  color: @blue;
+  border: 2pt solid @blue;
+}
+
+/* Remove o container principal (borda, fundo e sombra da janela global da Waybar) */
+window#waybar {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}

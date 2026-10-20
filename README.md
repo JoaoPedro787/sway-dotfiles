@@ -166,6 +166,11 @@ Waybar configurations are modularized under `waybar/.config/waybar/layouts/`. Th
 | :--- | :--- | :--- |
 | `default` | Edge-to-edge top bar (44px) | Full status bar with workspace list, cava visualizer, mpris media player, hardware monitors (CPU/RAM), tray, and power menu. |
 | `example` | Floating island bar (40px) | Minimalist floating bar with side margins, centered date/clock, essential audio, network, battery, and notification controls. |
+| `retro` | Framed perimeter retro bar (38px) | Minimalist frame border with Fedora branding, workspaces, audio, battery, SwayNC, and quick power actions. |
+| `block-1` | Modular block badges bar (20px) | Vibrant colored badges per module with solid border framing, workspaces with hover state, and center clock. |
+| `block-2` | Colored glyph outline bar (20px) | Colored icon glyphs with distinct per-module solid borders and centered clock. |
+| `block-3` | Uniform block boxes bar (20px) | Consistent dark module button boxes with subtle borders and centered clock. |
+| `block-4` | Continuous full bar (20px) | Continuous solid background bar with block modules and right-aligned clock. |
 
 ### 🔄 Automatic Color & Border Inheritance
 Every Waybar layout automatically connects to the Theme Suite and Border Suite via standard imports:

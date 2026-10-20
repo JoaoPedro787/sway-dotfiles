@@ -106,7 +106,27 @@ Ambos foram desenhados com base em quatro princípios:
         │   ├── style.css
         │   ├── colors -> ../../colors
         │   └── borders -> ../../borders
-        └── retro/                      # Layout retrô minimalista com moldura de borda
+        ├── retro/                      # Layout retrô minimalista com moldura de borda
+        │   ├── config.jsonc
+        │   ├── style.css
+        │   ├── colors -> ../../colors
+        │   └── borders -> ../../borders
+        ├── block-1/                    # Layout com badges coloridos e bordas sólidas
+        │   ├── config.jsonc
+        │   ├── style.css
+        │   ├── colors -> ../../colors
+        │   └── borders -> ../../borders
+        ├── block-2/                    # Layout com ícones coloridos e contornos individuais
+        │   ├── config.jsonc
+        │   ├── style.css
+        │   ├── colors -> ../../colors
+        │   └── borders -> ../../borders
+        ├── block-3/                    # Layout com módulos em blocos uniformes
+        │   ├── config.jsonc
+        │   ├── style.css
+        │   ├── colors -> ../../colors
+        │   └── borders -> ../../borders
+        └── block-4/                    # Layout de barra contínua com relógio à direita
             ├── config.jsonc
             ├── style.css
             ├── colors -> ../../colors
