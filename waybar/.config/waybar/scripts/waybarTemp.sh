@@ -5,52 +5,126 @@
 
 MODE="${1:-simple}"
 
-TEMP=""
+get_cpu_temp() {
+  local temp_raw=""
 
-# 1. Try lm_sensors if available
-if command -v sensors &>/dev/null; then
-  TEMP=$(sensors | grep -m 1 'Package id 0' | awk '{print $4}' | tr -d '+°C')
-  if [[ -z "$TEMP" ]]; then
-    TEMP=$(sensors | grep -m 1 'edge' | awk '{print $2}' | tr -d '+°C')
-  fi
-fi
+  # 1. Hardware monitoring (hwmon) - Prioridade para drivers oficiais de CPU (Intel / AMD)
+  for hw in /sys/class/hwmon/hwmon*; do
+    [ -d "$hw" ] || continue
+    local name=""
+    [ -r "$hw/name" ] && name=$(cat "$hw/name" 2>/dev/null)
 
-# 2. Fallback to /sys/class/thermal
-if [[ -z "$TEMP" ]]; then
-  for tz in /sys/class/thermal/thermal_zone*/temp; do
-    if [[ -r "$tz" ]]; then
-      raw=$(cat "$tz" 2>/dev/null)
-      type_file="$(dirname "$tz")/type"
-      if [[ -r "$type_file" ]]; then
-        type_name=$(cat "$type_file" 2>/dev/null)
-        if [[ "$type_name" == *"pkg_temp"* || "$type_name" == *"cpu"* || "$type_name" == *"acpitz"* ]]; then
-          if [[ -n "$raw" && "$raw" -gt 0 ]]; then
-            TEMP=$(( raw / 1000 ))
-            break
+    case "$name" in
+      coretemp) # Intel: Package id 0 ou Core
+        # Prioridade para o pacote global da CPU
+        for lbl in "$hw"/temp*_label; do
+          [ -r "$lbl" ] || continue
+          local label_val
+          label_val=$(cat "$lbl" 2>/dev/null)
+          if [[ "$label_val" =~ [Pp]ackage\ id ]]; then
+            local input="${lbl%_label}_input"
+            if [ -r "$input" ]; then
+              temp_raw=$(cat "$input" 2>/dev/null)
+              if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+                echo $(( (temp_raw + 500) / 1000 ))
+                return 0
+              fi
+            fi
+          fi
+        done
+        # Fallback dentro de coretemp: temp1_input ou outro sensor
+        for input in "$hw"/temp*_input; do
+          [ -r "$input" ] || continue
+          temp_raw=$(cat "$input" 2>/dev/null)
+          if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+            echo $(( (temp_raw + 500) / 1000 ))
+            return 0
+          fi
+        done
+        ;;
+
+      k10temp|zenpower) # AMD: Tctl ou Tdie
+        for lbl in "$hw"/temp*_label; do
+          [ -r "$lbl" ] || continue
+          local label_val
+          label_val=$(cat "$lbl" 2>/dev/null)
+          if [[ "$label_val" =~ (Tctl|Tdie) ]]; then
+            local input="${lbl%_label}_input"
+            if [ -r "$input" ]; then
+              temp_raw=$(cat "$input" 2>/dev/null)
+              if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+                echo $(( (temp_raw + 500) / 1000 ))
+                return 0
+              fi
+            fi
+          fi
+        done
+        if [ -r "$hw/temp1_input" ]; then
+          temp_raw=$(cat "$hw/temp1_input" 2>/dev/null)
+          if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+            echo $(( (temp_raw + 500) / 1000 ))
+            return 0
           fi
         fi
-      fi
-      if [[ -z "$TEMP" && -n "$raw" && "$raw" -gt 1000 ]]; then
-        TEMP=$(( raw / 1000 ))
+        ;;
+
+      *cpu*) # Outros drivers de CPU
+        for input in "$hw"/temp*_input; do
+          [ -r "$input" ] || continue
+          temp_raw=$(cat "$input" 2>/dev/null)
+          if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+            echo $(( (temp_raw + 500) / 1000 ))
+            return 0
+          fi
+        done
+        ;;
+    esac
+  done
+
+  # 2. Thermal zones específicas de CPU (/sys/class/thermal)
+  for tz in /sys/class/thermal/thermal_zone*; do
+    [ -d "$tz" ] || continue
+    local type=""
+    [ -r "$tz/type" ] && type=$(cat "$tz/type" 2>/dev/null | tr '[:upper:]' '[:lower:]')
+    if [[ "$type" == *"pkg_temp"* || "$type" == *"cpu"* || "$type" == *"k10temp"* || "$type" == "tcpu" ]]; then
+      if [ -r "$tz/temp" ]; then
+        temp_raw=$(cat "$tz/temp" 2>/dev/null)
+        if [[ -n "$temp_raw" && "$temp_raw" -gt 0 ]]; then
+          echo $(( (temp_raw + 500) / 1000 ))
+          return 0
+        fi
       fi
     fi
   done
-fi
 
-# 3. Fallback to /sys/class/hwmon
-if [[ -z "$TEMP" ]]; then
-  for hw in /sys/class/hwmon/hwmon*/temp1_input; do
-    if [[ -r "$hw" ]]; then
-      raw=$(cat "$hw" 2>/dev/null)
-      if [[ -n "$raw" && "$raw" -gt 1000 ]]; then
-        TEMP=$(( raw / 1000 ))
-        break
+  # 3. Fallback para comando lm_sensors se instalado
+  if command -v sensors &>/dev/null; then
+    local s_temp
+    s_temp=$(sensors 2>/dev/null | grep -m 1 -E "(Package id|Tctl|Tdie|CPU Temperature|Core 0)" | awk -F: '{print $2}' | tr -dc '0-9.' | cut -d. -f1)
+    if [[ -n "$s_temp" && "$s_temp" -gt 0 ]]; then
+      echo "$s_temp"
+      return 0
+    fi
+  fi
+
+  # 4. Último recurso absoluto: thermal zones genéricas (excluindo zonas inválidas/zeradas)
+  for tz in /sys/class/thermal/thermal_zone*; do
+    [ -d "$tz" ] || continue
+    if [ -r "$tz/temp" ]; then
+      temp_raw=$(cat "$tz/temp" 2>/dev/null)
+      if [[ -n "$temp_raw" && "$temp_raw" -gt 10000 ]]; then
+        echo $(( (temp_raw + 500) / 1000 ))
+        return 0
       fi
     fi
   done
-fi
 
-# Fallback if no temp found
+  return 1
+}
+
+TEMP=$(get_cpu_temp)
+
+# Fallback se nenhuma temperatura for encontrada
 if [[ -z "$TEMP" ]]; then
   CLASS="unknown"
   case "$MODE" in
