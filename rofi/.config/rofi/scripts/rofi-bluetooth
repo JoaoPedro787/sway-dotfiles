@@ -212,6 +212,14 @@ print_status() {
     fi
 }
 
+# Gets device battery percentage if available
+device_battery() {
+    battery=$(bluetoothctl info "$1" | awk -F '[()]' '/Battery Percentage:/ {print $2}')
+    if [ -n "$battery" ]; then
+        echo "Battery: $battery%"
+    fi
+}
+
 # A submenu for a specific device that allows connecting, pairing, and trusting
 device_menu() {
     device=$1
@@ -228,14 +236,20 @@ device_menu() {
     fi
     paired=$(device_paired "$mac")
     trusted=$(device_trusted "$mac")
-    options="$connected\n$paired\n$trusted\n$divider\n$goback\nExit"
+    battery=$(device_battery "$mac")
+
+    if [ -n "$battery" ]; then
+        options="$connected\n$paired\n$trusted\n$battery\n$divider\n$goback\nExit"
+    else
+        options="$connected\n$paired\n$trusted\n$divider\n$goback\nExit"
+    fi
 
     # Open rofi menu, read chosen option
     chosen="$(echo -e "$options" | $rofi_command "$device_name")"
 
     # Match chosen option to command
     case "$chosen" in
-        "" | "$divider")
+        "" | "$divider" | "$battery")
             echo "No option chosen."
             ;;
         "$connected")
