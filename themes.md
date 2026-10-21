@@ -24,7 +24,7 @@ These elements are configured globally across all palettes:
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`amoled`** | Pure Pitch Black (#000000) & High Contrast | [BOOmerang-Blackout](https://github.com/B00merang-Project/B00merang-Blackout) | [KDE-Classic-Icons](https://store.kde.org/p/2379533) | [s1mple-cursor-dark](https://www.gnome-look.org/p/1932768) | ⭐ **Author's Active Config** |
 | **`nord`** | Arctic, Cool Blue & Frost | [Nordic](https://github.com/EliverLara/Nordic) | [Nordzy](https://github.com/alvatip/Nordzy-icon) | [Nordzy-cursors](https://github.com/alvatip/Nordzy-cursors) *(or Simp1e-Dark)* | Suggested Companion |
-| **`gruvbox`** | Warm, Retro & Earth Tones | [Gruvbox-GTK](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme) | [Gruvbox-Plus](https://github.com/SylEleuth/gruvbox-plus-icon-pack) | [Capitaine-cursors-gruvbox](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme) *(or Simp1e-Dark)* | Suggested Companion |
+| **`gruvbox`** | Warm, Retro & Earth Tones | [Gruvbox-GTK](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme) | [KDE-Classic-Icons](https://store.kde.org/p/2379533) | [s1mple-cursor-dark](https://www.gnome-look.org/p/1932768) | Suggested Companion |
 | **`catppuccin-mocha`** | Soothing Pastel Dark | [Catppuccin-GTK (Mocha)](https://github.com/catppuccin/gtk) | [Papirus (Catppuccin Mocha)](https://github.com/catppuccin/papirus-folders) | [Catppuccin-Mocha-Cursors](https://github.com/catppuccin/cursors) *(or Simp1e-Dark)* | Suggested Companion |
 
 ---
